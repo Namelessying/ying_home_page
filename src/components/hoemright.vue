@@ -136,7 +136,7 @@ export default {
     components: {
         typewriter,turntable
     },
-    props: ['configdata','formattedTime','formattedDate','projectcards'],
+    props: ['configdata','formattedTime','formattedDate','projectcards','resourcecards'],
     setup() {
       const { xs,sm,md } = useDisplay();
       return {xs,sm,md};
@@ -146,6 +146,13 @@ export default {
         for(let i = 0;i < this.projectcards.length;i++){
           if(i != key){
             this.projectcards[i].show = false;
+          }
+        }
+      },
+      resourcecardsShow(key){
+        for(let i = 0;i < this.resourcecards.length;i++){
+          if(i != key){
+            this.resourcecards[i].show = false;
           }
         }
       }
