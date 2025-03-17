@@ -1,3 +1,4 @@
+npm install vuetify
 {
   "name": "vite-vuetify",
   "private": true,
