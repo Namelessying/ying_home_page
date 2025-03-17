@@ -108,7 +108,7 @@
 
             <v-col cols="12" md="8" lg="9" style="height: 100vh;" :style="xs||sm ?{}:{'overflow': 'auto'}">
                 <homeright :configdata=configdata :formattedTime=formattedTime 
-                :formattedDate=formattedDate :projectcards=projectcards></homeright>
+                :formattedDate=formattedDate :projectcards=projectcards :resourcecards=resourcecards></homeright>
             </v-col>
         </v-row>
     </div>
