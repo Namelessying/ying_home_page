@@ -45,7 +45,7 @@ const config = {
 
   //极坐标图数据
   polarChart:{
-    skills: ['"MikuMikuDance', 'Python', "Excel', 'Capcut', 'SPSS', 'MySQL'],
+    skills: ['MikuMikuDance', 'Python', "Excel', 'Capcut', 'SPSS', 'MySQL'],
     skillPoints: [90, 85, 78, 88, 65, 82],
   },
 
