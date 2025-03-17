@@ -50,12 +50,12 @@ const config = {
 
   //社交按钮，图标使用mdi图标（https://pictogrammers.com/library/mdi/），复制图标名称即可
   socialPlatformIcons: [
-    {icon:"mdi-github",link:"https://github.com/Namelessying"},
-    {icon:"mdi-email",link:"mailto:1421359526@qq.com"},
-    {icon:"mdi-qqchat",link:"https://im.qq.com/"},
-    {icon:"mdi-wechat",link:"https://wx.qq.com/"},
+    {icon:"/img/stackicon/bilibili.svg",link:"https://space.bilibili.com/432231153"},
     {icon:"mdi-youtube",link:"https://www.youtube.com/playlist?list=PLsBPKVLwNM-7ju9UI8BpAL41VJ_rC8fF_"},
-    {icon:"mdi-alpha-x-box",link:"https://x.com/liuxiao70492529"}
+    {icon:"mdi-github",link:"https://github.com/Namelessying"},
+    {icon:"mdi-alpha-x-box",link:"https://x.com/liuxiao70492529"},
+    {icon:"mdi-sina-weibo",link:"https://weibo.com/7405073174"},
+    {icon:"mdi-email",link:"mailto:1421359526@qq.com"}
   ],
 
   //打字机
