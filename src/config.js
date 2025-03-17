@@ -144,6 +144,18 @@ const config = {
     {go:"🍒 前往",img:"/img/sunshine.jpg",title:"暂无",subtitle:"暂无", text:"暂无",url:"https://ying.leleosd.top",show:false},
     {go:"🍌 前往",img:"/img/sunshine.jpg",title:"暂无",subtitle:"暂无", text:"暂无",url:"https://ying.leleosd.top",show:false},
   ],
+
+  // 新增的散写资源卡片
+  resourcecards:[ 
+    {go:"📝 查看",img:"/img/sunshine.jpg",title:"MMD教程",subtitle:"暂无", text:"整理了一系列MMD制作的基础教程，适合MMD新手学习。",url:"https://ying.leleosd.top",show:false},
+    {go:"📚 下载",img:"/img/sunshine.jpg",title:"同人小说",subtitle:"暂无", text:"闲暇之余写的小说集",url:"https://ying.leleosd.top",show:false},
+    {go:"🎵 获取",img:"/img/sunshine.jpg",title:"暂无",subtitle:"暂无", text:"暂无",url:"https://ying.leleosd.top",show:false},
+    {go:"🎞️ 浏览",img:"/img/sunshine.jpg",title:"暂无",subtitle:"暂无", text:"暂无",url:"https://ying.leleosd.top",show:false},
+    {go:"🎨 欣赏",img:"/img/sunshine.jpg",title:"暂无",subtitle:"暂无", text:"暂无",url:"https://ying.leleosd.top",show:false},
+    {go:"📖 阅读",img:"/img/sunshine.jpg",title:"暂无",subtitle:"暂无", text:"暂无",url:"https://ying.leleosd.top",show:false},
+    {go:"🎬 观看",img:"/img/sunshine.jpg",title:"暂无",subtitle:"暂无", text:"暂无",url:"https://ying.leleosd.top",show:false},
+    {go:"🔧 工具",img:"/img/sunshine.jpg",title:"暂无",subtitle:"暂无", text:"暂无",url:"https://ying.leleosd.top",show:false},
+  ],
   
   statement: ["备案号：XXICP备123456789号","Copyright © 2025 Leleo"],
 }
