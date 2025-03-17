@@ -44,8 +44,8 @@ const config = {
 
   //极坐标图数据
   polarChart:{
-    skills: ['MikuMikuDance', 'Python', "Excel', 'Capcut', 'SPSS', 'MySQL'],
-    skillPoints: [90, 85, 78, 88, 65, 82],
+    skills: ['MikuMikuDance','Python','Excel','Capcut','SPSS','MySQL'],
+    skillPoints: [85, 78, 88, 90, 80, 78],
   },
 
   //社交按钮，图标使用mdi图标（https://pictogrammers.com/library/mdi/），复制图标名称即可
