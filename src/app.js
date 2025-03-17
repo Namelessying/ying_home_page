@@ -46,6 +46,7 @@ export default {
         {icon:"$vuetify",color:"#1697F6", model: false,tip: 'vuetify'},
       ],
       projectcards:null,
+      resourcecards: null,
       tab: null,
       tabs: [
         {
@@ -74,7 +75,7 @@ export default {
     if(import.meta.env.VITE_CONFIG){
       this.configdata = JSON.parse(import.meta.env.VITE_CONFIG);
     }
-    this.projectcards = this.configdata.projectcards;this.socialPlatformIcons = this.configdata.socialPlatformIcons;
+    this.projectcards = this.configdata.projectcards;this.resourcecards = this.configdata.resourcecards;this.socialPlatformIcons = this.configdata.socialPlatformIcons;
     this.personalizedtags = this.configdata.tags;
     this.isloading = true;
     let imageurl = "";
@@ -87,7 +88,8 @@ export default {
     const loadImage = () => {
         const imageUrls = [
           config.avatar,
-          ...config.projectcards.map(item => item.img)
+          ...config.projectcards.map(item => item.img),
+          ...config.resourcecards.map(item => item.img)
         ];
         return new Promise((resolve, reject) => {
           const imagePromises = imageUrls.map((url) => {
@@ -251,6 +253,20 @@ export default {
 
     projectcardsShow(key){
       this.projectcards.forEach((item,index)=>{
+        if(index!= key){
+          item.show = false;
+        }
+      })
+    },
+    handleCancel(){
+      this.dialog1 = false;
+    },
+    jump(url){
+      window.open(url, '_blank').focus();
+    },
+
+    resourcecardsShow(key){
+      this.resourcecards.forEach((item,index)=>{
         if(index!= key){
           item.show = false;
         }
