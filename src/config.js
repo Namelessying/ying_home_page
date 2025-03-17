@@ -135,12 +135,12 @@ const config = {
 
   //项目卡片 其中 字段"show"控制初始卡片的text是否展开
   projectcards:[ 
-    {go:"🍉 前往",img:"/img/mmd1.jpg",title:"MMD作品展示 1",subtitle:"Ika式MIKU", text:"妈妈，这个米库真的超级米呜呜呜~感谢饺子老师的配布！！！！！一个略有梦幻的作品~",url:"https://www.bilibili.com/video/BV1Y2QDYNEEi/",show:true},
-    {go:"🍈 前往",img:"/img/mmd2.jpg",title:"MMD作品展示 2",subtitle:"げのげ式MIKU", text:"是你的话会祈愿什么呢？初音未来17th生贺MMD单品",url:"https://www.bilibili.com/video/BV1ZznoeNEaN/",show:true},
-    {go:"🍍 前往",img:"/img/mmd3.jpg",title:"MMD作品展示 3",subtitle:"🎵累了的话就来让我歌唱给你听吧~🎵", text:"这个作品是个希望给你带来温暖的，不要忘记自己初心的作品。希望你在遇到挫折时不要忘记那个活在二次元的女孩子一直在等着你，陪你歌唱。",url:"https://www.bilibili.com/video/BV13FNQeYETh/",show:true},
-    {go:"🍑 前往",img:"/img/mmd4.jpg",title:"MMD作品展示 4",subtitle:"SOUR式/YYB式MIKU", text:"只剩我和你的Miku之夜-Cynical Night Plan-一个差点咕咕咕但是还算满意的作品！",url:"https://www.bilibili.com/video/BV1oC411x7dH/",show:true},
-    {go:"🍊 前往",img:"/img/mmd5.jpg",title:"MMD作品展示 5",subtitle:"SOUR式RIN", text:"一个咕了1年的作品？rin酱我对不起你呜呜呜呜呜呜呜哇哇哇哇",url:"https://www.bilibili.com/video/BV1ZjySYnEcp/",show:true},
-    {go:"🍓 前往",img:"/img/mmd6.jpg",title:"MMD作品展示 6",subtitle:"「死別」", text:"一个只做了两天的小作品~",url:"https://www.bilibili.com/video/BV13b421n7MC",show:true},
+    {go:"🍉 前往",img:"/img/mmd1.jpg",title:"MMD作品展示 1",subtitle:"Ika式MIKU", text:"妈妈，这个米库真的超级米呜呜呜~感谢饺子老师的配布！！！！！一个略有梦幻的作品~",url:"https://www.bilibili.com/video/BV1Y2QDYNEEi/",show:false},
+    {go:"🍈 前往",img:"/img/mmd2.jpg",title:"MMD作品展示 2",subtitle:"げのげ式MIKU", text:"是你的话会祈愿什么呢？初音未来17th生贺MMD单品",url:"https://www.bilibili.com/video/BV1ZznoeNEaN/",show:false},
+    {go:"🍍 前往",img:"/img/mmd3.jpg",title:"MMD作品展示 3",subtitle:"🎵累了的话就来让我歌唱给你听吧~🎵", text:"这个作品是个希望给你带来温暖的，不要忘记自己初心的作品。希望你在遇到挫折时不要忘记那个活在二次元的女孩子一直在等着你，陪你歌唱。",url:"https://www.bilibili.com/video/BV13FNQeYETh/",show:false},
+    {go:"🍑 前往",img:"/img/mmd4.jpg",title:"MMD作品展示 4",subtitle:"SOUR式/YYB式MIKU", text:"只剩我和你的Miku之夜-Cynical Night Plan-一个差点咕咕咕但是还算满意的作品！",url:"https://www.bilibili.com/video/BV1oC411x7dH/",show:false},
+    {go:"🍊 前往",img:"/img/mmd5.jpg",title:"MMD作品展示 5",subtitle:"SOUR式RIN", text:"一个咕了1年的作品？rin酱我对不起你呜呜呜呜呜呜呜哇哇哇哇",url:"https://www.bilibili.com/video/BV1ZjySYnEcp/",show:false},
+    {go:"🍓 前往",img:"/img/mmd6.jpg",title:"MMD作品展示 6",subtitle:"「死別」", text:"一个只做了两天的小作品~",url:"https://www.bilibili.com/video/BV13b421n7MC",show:false},
     {go:"🍒 前往",img:"/img/sunshine.jpg",title:"暂无",subtitle:"暂无", text:"暂无",url:"https://ying.leleosd.top",show:false},
     {go:"🍌 前往",img:"/img/sunshine.jpg",title:"暂无",subtitle:"暂无", text:"暂无",url:"https://ying.leleosd.top",show:false},
   ],
