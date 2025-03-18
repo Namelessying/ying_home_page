@@ -27,14 +27,20 @@ export default {
   },
   methods: {
     generateColors(count) {
+      const colorPalette = [
+        'rgba(225, 228, 234, 1.0)',  // 灰色
+        'rgba(102, 204, 255, 1.0)',  // 天依色
+        'rgba(132, 112, 155, 1.0)',  // 紫色
+        'rgba(57, 197, 187, 1.0)',  // 初音色
+        'rgba(93, 125, 179, 1.0)',  // 暗蓝色
+        'rgba(182, 202, 215, 1.0)',  // 灰蓝色
+      ];
       const colors = [];
       for (let i = 0; i < count; i++) {
-        const r = Math.floor(Math.random() * 255);
-        const g = Math.floor(Math.random() * 255);
-        const b = Math.floor(Math.random() * 255);
-        colors.push(`rgba(${r}, ${g}, ${b}, 0.6)`);
+        colors.push(colorPalette[i % colorPalette.length]); // 循环使用颜色
       }
       return colors;
+      }
     },
     renderChart() {
       const ctx = document.getElementById('polarChart').getContext('2d');
