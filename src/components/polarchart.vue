@@ -40,7 +40,6 @@ export default {
         colors.push(colorPalette[i % colorPalette.length]); // 循环使用颜色
       }
       return colors;
-      }
     },
     renderChart() {
       const ctx = document.getElementById('polarChart').getContext('2d');
