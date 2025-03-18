@@ -27,7 +27,7 @@ const config = {
       "type":"video",   //"pic":静态壁纸;"video":动态壁纸
       "datainfo":{
         "title":"鸦江初音", 
-        "preview":"/img/wallpaper/dynamic/鸦江老师miku01/miku_preview.webp",
+        "preview":"/img/wallpaper/dynamic/鸦江老师miku01/miku01.webm",
         "url":"/img/wallpaper/dynamic/鸦江老师miku01/miku01.webm",     //当然，也可填写网络地址或壁纸api，如随机PC壁纸api："url":"https://t.mwm.moe/pc"
       },
     },
@@ -119,7 +119,7 @@ const config = {
       },
       {
         "title":"鸦江初音",
-        "preview":"/img/wallpaper/dynamic/鸦江老师miku01/miku_preview.webp",
+        "preview":"/img/wallpaper/dynamic/鸦江老师miku01/miku01.webm",
         "url":"/img/wallpaper/dynamic/鸦江老师miku01/miku01.webm"
       },
     ],
