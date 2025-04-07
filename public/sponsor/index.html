@@ -89,14 +89,18 @@
             vertical-align: middle;
         }
         
-        .arrow {
-            width: 20px;
-            height: 20px;
+        .arrow-icon {
+            width: 12px;
+            height: 12px;
+            border-right: 2px solid #666;
+            border-bottom: 2px solid #666;
+            transform: rotate(45deg);
             transition: transform 0.3s ease;
+            margin-right: 5px;
         }
         
-        .arrow.active {
-            transform: rotate(180deg);
+        .arrow-icon.active {
+            transform: rotate(-135deg);
         }
         
         .payment-content {
@@ -216,7 +220,7 @@
                         <img src="https://res.wx.qq.com/a/wx_fed/assets/res/NTI4MWU5.ico" alt="微信" class="logo">
                         微信支付
                     </h2>
-                    <img src="../img/arrow-down.png" alt="展开" class="arrow" id="wechat-arrow">
+                    <div class="arrow-icon" id="wechat-arrow"></div>
                 </div>
                 <div class="payment-content" id="wechat-content">
                     <div class="qr-container">
@@ -236,7 +240,7 @@
                         <img src="https://img.alicdn.com/tfs/TB1qEwuzrj1gK0jSZFOXXc7GpXa-32-32.ico" alt="支付宝" class="logo">
                         支付宝
                     </h2>
-                    <img src="../img/arrow-down.png" alt="展开" class="arrow" id="alipay-arrow">
+                    <div class="arrow-icon" id="alipay-arrow"></div>
                 </div>
                 <div class="payment-content" id="alipay-content">
                     <div class="qr-container">
