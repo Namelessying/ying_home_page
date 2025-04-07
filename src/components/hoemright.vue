@@ -41,7 +41,7 @@
                     cover
                     :style="{ opacity: 0.8 }"
                   ></v-img>
-                  <v-card-title :style="xs?{'font-size': '0.9rem','padding': '0.15rem 0.5rem'}:{'font-size': '1.1rem','padding':'0.2rem 0.8rem'}">
+                  <v-card-title :style="xs?{'font-size': '0.9rem','padding': '0.15rem 0.5rem'} : {'font-size': '1.1rem','padding':'0.2rem 0.8rem'}, item.titleColor ? `color: ${item.titleColor} !important` : '']">
                     {{item.title}}
                   </v-card-title>
                   <v-card-subtitle :style="xs?{'font-size': '0.6rem','padding': '0.1rem 0.5rem'}:{'font-size': '0.8rem','padding':'0.15rem 0.6rem'}">
@@ -92,7 +92,7 @@
                     cover
                     :style="{ opacity: 0.8 }"
                   ></v-img>
-                  <v-card-title :style="xs?{'font-size': '0.9rem','padding': '0.15rem 0.5rem'}:{'font-size': '1.1rem','padding':'0.2rem 0.8rem'}">
+                  <v-card-title :style="xs?{'font-size': '0.9rem','padding': '0.15rem 0.5rem'} : {'font-size': '1.1rem','padding':'0.2rem 0.8rem'}, item.titleColor ? `color: ${item.titleColor} !important` : '']">
                     {{item.title}}
                   </v-card-title>
                   <v-card-subtitle :style="xs?{'font-size': '0.6rem','padding': '0.1rem 0.5rem'}:{'font-size': '0.8rem','padding':'0.15rem 0.6rem'}">
