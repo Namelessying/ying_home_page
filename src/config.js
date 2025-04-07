@@ -151,7 +151,7 @@ const config = {
     {go:"🍊 前往",img:"/img/mmd5.jpg",title:"MMD作品展示 5",subtitle:"SOUR式RIN", text:"一个咕了1年的作品？rin酱我对不起你呜呜呜呜呜呜呜哇哇哇哇",url:"https://www.bilibili.com/video/BV1ZjySYnEcp/",show:false},
     {go:"🍓 前往",img:"/img/mmd6.jpg",title:"MMD作品展示 6",subtitle:"「死別」", text:"一个只做了两天的小作品~",url:"https://www.bilibili.com/video/BV13b421n7MC/?vd_source=5f32994078b954a1035f2cdf7a7c6e64",show:false},
     {go:"🍒 前往",img:"/img/7.jpg",title:"B站工房下单",subtitle:"欢迎代渲染MMD", text:"可能会做得不太好，请多见谅呜呜呜",url:"https://gf.bilibili.com/item/detail/1108977111",show:false},
-    {go:"🍌 前往",img:"/img/sunshine.jpg",title:"暂无",subtitle:"暂无", text:"暂无",url:"https://ying.leleosd.top",show:false},
+    {go:"💖 赞助",img:"/img/sunshine.jpg",title:"赞助支持",subtitle:"感谢您的支持与鼓励", text:"如果您喜欢我的作品，可以考虑给我一些支持，这将帮助我创作更多优质内容！",url:"/sponsor/",show:false},
   ],
 
   // 新增的散写资源卡片
