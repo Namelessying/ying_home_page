@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>赞助支持 - 流殇晓萤</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css">
     <style>
         @font-face {
             font-family: "myfont";
@@ -50,58 +49,101 @@
             margin: 0 auto;
         }
         
-        .qr-container {
+        .payment-options {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 40px;
+            gap: 30px;
             margin-bottom: 50px;
         }
         
-        .qr-code {
+        .payment-option {
             background-color: white;
             border-radius: 12px;
-            padding: 25px;
-            text-align: center;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            width: 340px;
+            width: 100%;
+            max-width: 340px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-header {
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
-            padding-bottom: 60px; /* Add space for the caption at bottom */
         }
         
-        .qr-code:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        .wechat-header {
+            background-color: #f8f8f8;
         }
         
-        .qr-code h2 {
+        .alipay-header {
+            background-color: #f8f8f8;
+        }
+        
+        .payment-header h2 {
             font-size: 1.5rem;
-            margin-bottom: 15px;
+            margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         
-        .qr-code h2 i {
-            margin-right: 8px;
+        .payment-header img {
+            height: 28px;
+            margin-right: 10px;
         }
         
-        .qr-code img {
-            width: 280px;
-            height: auto;
-            margin-bottom: 15px;
-            border-radius: 8px;
-        }
-        
-        .qr-code p {
-            color: #666;
-            font-size: 0.9rem;
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            right: 0;
+        .payment-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
             text-align: center;
+        }
+        
+        .payment-content.active {
+            max-height: 600px;
+        }
+        
+        .qr-container {
+            padding: 20px;
+            background-color: #fff;
+        }
+        
+        .wechat-container {
+            background-color: #07C160;
+            color: white;
+        }
+        
+        .alipay-container {
+            background-color: #1677FF;
+            color: white;
+        }
+        
+        .qr-code-wrapper {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px auto;
+            width: 250px;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .qr-code-wrapper img {
+            width: 100%;
+            height: auto;
+        }
+        
+        .payment-caption {
+            padding: 15px;
+            text-align: center;
+            font-size: 0.95rem;
         }
         
         .feedback-section {
@@ -159,23 +201,17 @@
             text-decoration: underline;
         }
         
-        .back-link i {
+        .back-link a svg {
             margin-right: 5px;
         }
         
         @media (max-width: 768px) {
-            .qr-container {
+            .payment-options {
                 gap: 20px;
             }
             
-            .qr-code {
+            .payment-option {
                 width: 100%;
-                max-width: 340px;
-            }
-            
-            .qr-code img {
-                width: 100%;
-                max-width: 280px;
             }
             
             .header h1 {
@@ -191,17 +227,43 @@
             <p>感谢您的支持与鼓励！您的赞助将帮助我创作更多优质内容，持续分享MMD作品。</p>
         </div>
         
-        <div class="qr-container">
-            <div class="qr-code">
-                <h2><i class="mdi mdi-wechat" style="color: #07C160;"></i>微信支付</h2>
-                <img src="../img/wechat-pay.jpg" alt="微信支付二维码">
-                <p>扫描二维码，支持我的创作</p>
+        <div class="payment-options">
+            <div class="payment-option">
+                <div class="payment-header wechat-header" onclick="togglePayment('wechat')">
+                    <img src="../img/wechat-logo.png" alt="微信支付">
+                    <h2>微信支付</h2>
+                </div>
+                <div class="payment-content" id="wechat-content">
+                    <div class="qr-container wechat-container">
+                        <div class="qr-title">推荐使用微信支付</div>
+                        <div class="qr-code-wrapper">
+                            <img src="../img/wechat-pay.jpg" alt="微信支付二维码">
+                        </div>
+                        <div class="qr-name">再黎鹏(*威)</div>
+                    </div>
+                    <div class="payment-caption">
+                        扫描二维码，支持我的创作
+                    </div>
+                </div>
             </div>
             
-            <div class="qr-code">
-                <h2><i class="mdi mdi-alpha-a-circle" style="color: #1677FF;"></i>支付宝</h2>
-                <img src="../img/alipay.jpg" alt="支付宝二维码">
-                <p>扫描二维码，支持我的创作</p>
+            <div class="payment-option">
+                <div class="payment-header alipay-header" onclick="togglePayment('alipay')">
+                    <img src="../img/alipay-logo.png" alt="支付宝">
+                    <h2>支付宝</h2>
+                </div>
+                <div class="payment-content" id="alipay-content">
+                    <div class="qr-container alipay-container">
+                        <div class="qr-title">推荐使用支付宝</div>
+                        <div class="qr-code-wrapper">
+                            <img src="../img/alipay.jpg" alt="支付宝二维码">
+                        </div>
+                        <div class="qr-name">小萤(*威)</div>
+                    </div>
+                    <div class="payment-caption">
+                        扫描二维码，支持我的创作
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -214,9 +276,37 @@
         </div>
         
         <div class="back-link">
-            <a href="/"><i class="mdi mdi-arrow-left"></i>返回主页</a>
+            <a href="/">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                返回主页
+            </a>
         </div>
     </div>
+
+    <script>
+        function togglePayment(type) {
+            const wechatContent = document.getElementById('wechat-content');
+            const alipayContent = document.getElementById('alipay-content');
+            
+            if (type === 'wechat') {
+                if (wechatContent.classList.contains('active')) {
+                    wechatContent.classList.remove('active');
+                } else {
+                    wechatContent.classList.add('active');
+                    alipayContent.classList.remove('active');
+                }
+            } else if (type === 'alipay') {
+                if (alipayContent.classList.contains('active')) {
+                    alipayContent.classList.remove('active');
+                } else {
+                    alipayContent.classList.add('active');
+                    wechatContent.classList.remove('active');
+                }
+            }
+        }
+    </script>
 </body>
 </html>
 
