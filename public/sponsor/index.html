@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>赞助支持 - 流殇晓萤</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css">
+    <style>
+        @font-face {
+            font-family: "myfont";
+            src: url("../fonts/faken.ttf");
+            font-display: swap;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "myfont", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f5f7;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .qr-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .qr-code {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 280px;
+        }
+        
+        .qr-code:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .qr-code h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .qr-code h2 i {
+            margin-right: 8px;
+        }
+        
+        .qr-code img {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+        
+        .qr-code p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .feedback-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        
+        .feedback-section h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .feedback-section p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+        
+        .feedback-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .feedback-button:hover {
+            background-color: #3a7bc8;
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .back-link a {
+            color: #4a90e2;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .back-link i {
+            margin-right: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .qr-container {
+                gap: 20px;
+            }
+            
+            .qr-code {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>赞助支持</h1>
+            <p>感谢您的支持与鼓励！您的赞助将帮助我创作更多优质内容，持续分享MMD作品。</p>
+        </div>
+        
+        <div class="qr-container">
+            <div class="qr-code">
+                <h2><i class="mdi mdi-wechat" style="color: #07C160;"></i>微信支付</h2>
+                <img src="../img/wechat-pay.jpg" alt="微信支付二维码">
+                <p>扫描二维码，支持我的创作</p>
+            </div>
+            
+            <div class="qr-code">
+                <h2><i class="mdi mdi-alpha-a-circle" style="color: #1677FF;"></i>支付宝</h2>
+                <img src="../img/alipay.jpg" alt="支付宝二维码">
+                <p>扫描二维码，支持我的创作</p>
+            </div>
+        </div>
+        
+        <div class="feedback-section">
+            <h2>二维码反馈</h2>
+            <p>如果您发现二维码无法正常使用或有其他问题，请点击下方按钮发送反馈邮件。</p>
+            <a href="mailto:1421359526@qq.com?subject=二维码反馈&body=我发现以下问题：%0A%0A[请在此描述您遇到的问题]%0A%0A设备信息：%0A浏览器：%0A操作系统：" class="feedback-button">
+                发送反馈
+            </a>
+        </div>
+        
+        <div class="back-link">
+            <a href="/"><i class="mdi mdi-arrow-left"></i>返回主页</a>
+        </div>
+    </div>
+</body>
+</html>
+
