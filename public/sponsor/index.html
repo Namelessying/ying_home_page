@@ -65,7 +65,7 @@
             text-align: center;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            width: 280px;
+            width: 340px;
         }
         
         .qr-code:hover {
@@ -86,8 +86,8 @@
         }
         
         .qr-code img {
-            width: 200px;
-            height: 200px;
+            width: 280px;
+            height: auto;
             margin-bottom: 15px;
             border-radius: 8px;
         }
@@ -162,6 +162,11 @@
             }
             
             .qr-code {
+                width: 100%;
+                max-width: 340px;
+            }
+            
+            .qr-code img {
                 width: 100%;
                 max-width: 280px;
             }
