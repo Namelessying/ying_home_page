@@ -161,7 +161,7 @@ const config = {
     {go:"📚 学习",img:"/img/source2.jpg",title:"知识分享",subtitle:"Notion学习笔记", text:"目前仅有《应用统计》。",url:"https://fancy-twine-71b.notion.site/namelessyingknowledge",show:false},
     {go:"📖 阅读",img:"/img/source3.jpg",title:"散漫想法",subtitle:"Notion故事分享", text:"闲暇之余写的故事集（基本都咕咕了）",url:"https://fancy-twine-71b.notion.site/yingdream",show:false},
     {go:"🎮 模型",img:"/img/114514.png",title:"模型配布",subtitle:"MMD模型配布", text:"这里有一些秘密，需要密码才能访问哦~",url:"/secret/",show:false},
-    {go:"🎵 获取",img:"/img/sunshine.jpg",title:"暂无",subtitle:"暂无", text:"暂无",url:"https://ying.leleosd.top",show:false},
+    {go:"💬 留言",img:"/img/1a04d0fc92c4668c45c996a1f1c3b641.png",title:"留言板",subtitle:"欢迎交流~", text:"欢迎在这里留下您的想法、建议或者问候！",url:"/messageboard/",show:false},
     {go:"🎬 观看",img:"/img/sunshine.jpg",title:"暂无",subtitle:"暂无", text:"暂无",url:"https://ying.leleosd.top",show:false},
     {go:"🔧 工具",img:"/img/sunshine.jpg",title:"暂无",subtitle:"暂无", text:"暂无",url:"https://ying.leleosd.top",show:false},
   ],
