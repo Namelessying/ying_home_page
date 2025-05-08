@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留言板 - 流殇晓萤</title>
+    <style>
+        @font-face {
+            font-family: "myfont";
+            src: url("../fonts/faken.ttf");
+            font-display: swap;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "myfont", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f7ff;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #1e3a7b;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: #4a4a4a;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .message-form {
+            background-color: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #1e3a7b;
+        }
+        
+        .form-group input, 
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #d0e1f9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus, 
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3a6ea5;
+            box-shadow: 0 0 10px rgba(58, 110, 165, 0.2);
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background-color: #3a6ea5;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #1e3a7b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .messages-container {
+            margin-top: 40px;
+        }
+        
+        .messages-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .messages-header h2 {
+            color: #1e3a7b;
+            font-size: 1.8rem;
+        }
+        
+        .sort-options {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .sort-btn {
+            background-color: #d0e1f9;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            color: #1e3a7b;
+            transition: all 0.3s;
+        }
+        
+        .sort-btn.active {
+            background-color: #3a6ea5;
+            color: white;
+        }
+        
+        .sort-btn:hover {
+            background-color: #b3cde0;
+        }
+        
+        .message-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .message-card {
+            background-color: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .message-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .message-author {
+            font-weight: 600;
+            color: #1e3a7b;
+            font-size: 1.1rem;
+        }
+        
+        .message-time {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .message-content {
+            color: #333;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        
+        .message-actions {
+            margin-top: 15px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .message-btn {
+            background-color: transparent;
+            border: none;
+            color: #3a6ea5;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .message-btn:hover {
+            background-color: #f0f7ff;
+            color: #1e3a7b;
+        }
+        
+        .delete-btn {
+            color: #e63946;
+        }
+        
+        .delete-btn:hover {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+        .no-messages {
+            text-align: center;
+            padding: 40px 0;
+            color: #888;
+            font-style: italic;
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .back-link a {
+            color: #3a6ea5;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            font-size: 1rem;
+        }
+        
+        .back-link a:hover {
+            text-decoration: underline;
+            color: #1e3a7b;
+        }
+        
+        .back-link a svg {
+            margin-right: 5px;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background-color: #4caf50;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transform: translateX(200%);
+            transition: transform 0.3s ease-out;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background-color: #e63946;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .message-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .message-time {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>留言板</h1>
+            <p>欢迎在这里留下您的想法、建议或者问候！</p>
+        </div>
+        
+        <div class="message-form">
+            <form id="message-form">
+                <div class="form-group">
+                    <label for="name">您的昵称</label>
+                    <input type="text" id="name" name="name" required placeholder="请输入您的昵称">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">留言内容</label>
+                    <textarea id="message" name="message" required placeholder="请输入您想说的话..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">发布留言</button>
+            </form>
+        </div>
+        
+        <div class="messages-container">
+            <div class="messages-header">
+                <h2>所有留言</h2>
+                <div class="sort-options">
+                    <button class="sort-btn active" data-sort="newest">最新</button>
+                    <button class="sort-btn" data-sort="oldest">最早</button>
+                </div>
+            </div>
+            
+            <div class="message-list" id="message-list">
+                <!-- 留言将通过JavaScript动态添加 -->
+                <div class="no-messages" id="no-messages">
+                    暂无留言，成为第一个留言的人吧！
+                </div>
+            </div>
+        </div>
+        
+        <div class="back-link">
+            <a href="/">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                返回主页
+            </a>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">留言发布成功！</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const messageForm = document.getElementById('message-form');
+            const messageList = document.getElementById('message-list');
+            const noMessages = document.getElementById('no-messages');
+            const notification = document.getElementById('notification');
+            const sortButtons = document.querySelectorAll('.sort-btn');
+            
+            let currentSort = 'newest';
+            
+            // 从localStorage加载留言
+            function loadMessages() {
+                let messages = JSON.parse(localStorage.getItem('messages')) || [];
+                
+                // 根据当前排序方式排序
+                if (currentSort === 'newest') {
+                    messages.sort((a, b) => b.timestamp - a.timestamp);
+                } else {
+                    messages.sort((a, b) => a.timestamp - b.timestamp);
+                }
+                
+                // 清空留言列表
+                while (messageList.firstChild) {
+                    if (messageList.firstChild !== noMessages) {
+                        messageList.removeChild(messageList.firstChild);
+                    }
+                }
+                
+                // 显示或隐藏"暂无留言"提示
+                if (messages.length === 0) {
+                    noMessages.style.display = 'block';
+                } else {
+                    noMessages.style.display = 'none';
+                    
+                    // 添加留言到列表
+                    messages.forEach((message, index) => {
+                        const messageCard = createMessageCard(message, index);
+                        messageList.appendChild(messageCard);
+                    });
+                }
+            }
+            
+            // 创建留言卡片
+            function createMessageCard(message, index) {
+                const messageCard = document.createElement('div');
+                messageCard.className = 'message-card';
+                messageCard.dataset.index = index;
+                
+                const messageDate = new Date(message.timestamp);
+                const formattedDate = `${messageDate.getFullYear()}年${messageDate.getMonth() + 1}月${messageDate.getDate()}日 ${messageDate.getHours().toString().padStart(2, '0')}:${messageDate.getMinutes().toString().padStart(2, '0')}`;
+                
+                messageCard.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-author">${escapeHTML(message.name)}</div>
+                        <div class="message-time">${formattedDate}</div>
+                    </div>
+                    <div class="message-content">${escapeHTML(message.message)}</div>
+                    <div class="message-actions">
+                        <button class="message-btn delete-btn" data-index="${index}">删除</button>
+                    </div>
+                `;
+                
+                // 添加删除按钮事件
+                const deleteBtn = messageCard.querySelector('.delete-btn');
+                deleteBtn.addEventListener('click', function() {
+                    const index = this.dataset.index;
+                    deleteMessage(index);
+                });
+                
+                return messageCard;
+            }
+            
+            // 添加新留言
+            function addMessage(name, message) {
+                const newMessage = {
+                    name: name,
+                    message: message,
+                    timestamp: Date.now()
+                };
+                
+                let messages = JSON.parse(localStorage.getItem('messages')) || [];
+                messages.push(newMessage);
+                localStorage.setItem('messages', JSON.stringify(messages));
+                
+                loadMessages();
+                showNotification('留言发布成功！');
+            }
+            
+            // 删除留言
+            function deleteMessage(index) {
+                let messages = JSON.parse(localStorage.getItem('messages')) || [];
+                
+                // 确认是否删除
+                if (confirm('确定要删除这条留言吗？')) {
+                    messages.splice(index, 1);
+                    localStorage.setItem('messages', JSON.stringify(messages));
+                    loadMessages();
+                    showNotification('留言已删除！');
+                }
+            }
+            
+            // 显示通知
+            function showNotification(message, isError = false) {
+                notification.textContent = message;
+                notification.className = 'notification';
+                
+                if (isError) {
+                    notification.classList.add('error');
+                }
+                
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+            
+            // 转义HTML特殊字符，防止XSS攻击
+            function escapeHTML(str) {
+                return str
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;');
+            }
+            
+            // 表单提交事件
+            messageForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const nameInput = document.getElementById('name');
+                const messageInput = document.getElementById('message');
+                
+                const name = nameInput.value.trim();
+                const message = messageInput.value.trim();
+                
+                if (name && message) {
+                    addMessage(name, message);
+                    
+                    // 清空表单
+                    nameInput.value = '';
+                    messageInput.value = '';
+                } else {
+                    showNotification('请填写昵称和留言内容！', true);
+                }
+            });
+            
+            // 排序按钮点击事件
+            sortButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const sortType = this.dataset.sort;
+                    
+                    if (sortType !== currentSort) {
+                        // 更新激活状态
+                        sortButtons.forEach(btn => btn.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        currentSort = sortType;
+                        loadMessages();
+                    }
+                });
+            });
+            
+            // 初始加载留言
+            loadMessages();
+        });
+    </script>
+</body>
+</html>
