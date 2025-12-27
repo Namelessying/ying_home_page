@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 年度报告生成器</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #333;
+            --bg-color: #f4f4f4;
+            --card-ratio: 1 / 1; /* 这里控制图片比例，1/1为正方形，4/3为矩形 */
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 控制按钮区域 */
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #1a252f;
+        }
+
+        /* 报告主要区域 - 将会被截图的部分 */
+        #report-container {
+            width: 1000px; /* 固定宽度以保证导出质量 */
+            background-color: white;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .report-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .report-header h1 {
+            font-size: 3em;
+            margin: 0;
+            color: #333;
+            letter-spacing: 2px;
+        }
+
+        .report-header p {
+            font-size: 1.2em;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        /* 网格布局：3列 x 4行 = 12个月 */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
+        }
+
+        .month-card {
+            background: #fff;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: border-color 0.3s;
+            aspect-ratio: var(--card-ratio); /* 保持形状 */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .month-card:hover {
+            border-color: #999;
+        }
+
+        .month-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* 图片容器 */
+        .img-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+            font-size: 40px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .img-placeholder::after {
+            content: '+';
+        }
+
+        /* 当有图片时，移除加号 */
+        .img-placeholder.has-image::after {
+            content: '';
+        }
+
+        /* 隐藏的文件输入框 */
+        #file-input {
+            display: none;
+        }
+
+        /* --- 裁剪弹窗样式 --- */
+        #crop-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .crop-container {
+            width: 80%;
+            height: 70%;
+            background: #333;
+            margin-bottom: 20px;
+        }
+
+        .crop-container img {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-cancel {
+            background-color: #e74c3c;
+        }
+        
+        .btn-confirm {
+            background-color: #27ae60;
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            color: #aaa;
+            font-size: 0.8em;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <button onclick="downloadReport()">📥 一键保存年度报告</button>
+    </div>
+
+    <div id="report-container">
+        <div class="report-header">
+            <h1>2025 ANNUAL REPORT</h1>
+            <p>MY YEAR IN REVIEW</p>
+        </div>
+
+        <div class="grid-container" id="grid">
+            </div>
+
+        <div class="footer-note">Generated by My 2025 Report Builder</div>
+    </div>
+
+    <input type="file" id="file-input" accept="image/*">
+
+    <div id="crop-modal">
+        <div class="crop-container">
+            <img id="image-to-crop" src="">
+        </div>
+        <div class="modal-buttons">
+            <button class="btn-cancel" onclick="closeModal()">取消</button>
+            <button class="btn-confirm" onclick="confirmCrop()">✅ 确认裁剪</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <script>
+        // 1. 初始化 12 个月的格子
+        const grid = document.getElementById('grid');
+        const months = [
+            "January", "February", "March", "April", "May", "June", 
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        months.forEach((month, index) => {
+            const card = document.createElement('div');
+            card.className = 'month-card';
+            card.onclick = () => selectImage(index); // 绑定点击事件
+            
+            card.innerHTML = `
+                <div class="month-label">${index + 1} | ${month}</div>
+                <div class="img-placeholder" id="month-img-${index}"></div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // 变量存储
+        let currentTargetIndex = null; // 当前正在编辑哪个月
+        let cropper = null; // 裁剪器实例
+        const fileInput = document.getElementById('file-input');
+        const cropModal = document.getElementById('crop-modal');
+        const imageToCrop = document.getElementById('image-to-crop');
+
+        // 2. 点击格子触发文件选择
+        function selectImage(index) {
+            currentTargetIndex = index;
+            fileInput.value = ''; // 清空上次的选择
+            fileInput.click();
+        }
+
+        // 3. 监听文件选择
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    imageToCrop.src = event.target.result;
+                    showModal(); // 显示裁剪窗口
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 4. 显示裁剪弹窗并初始化 Cropper
+        function showModal() {
+            cropModal.style.display = 'flex';
+            // 如果之前有实例，先销毁
+            if(cropper) {
+                cropper.destroy();
+            }
+            // 初始化裁剪器
+            cropper = new Cropper(imageToCrop, {
+                aspectRatio: 1 / 1, // 强制正方形 (对应CSS中的 card-ratio)
+                viewMode: 1, // 限制裁剪框不能超出图片范围
+                autoCropArea: 1,
+            });
+        }
+
+        // 5. 关闭弹窗
+        function closeModal() {
+            cropModal.style.display = 'none';
+            if(cropper) {
+                cropper.destroy();
+                cropper = null;
+            }
+        }
+
+        // 6. 确认裁剪
+        function confirmCrop() {
+            if (!cropper) return;
+
+            // 获取裁剪后的图片 (Canvas)
+            const canvas = cropper.getCroppedCanvas({
+                width: 600, // 限制输出宽度，防止图片过大导致页面卡顿
+                height: 600
+            });
+
+            // 将 Canvas 转为 DataURL
+            const croppedImageURL = canvas.toDataURL('image/jpeg');
+
+            // 放置到对应的格子中
+            const targetDiv = document.getElementById(`month-img-${currentTargetIndex}`);
+            targetDiv.style.backgroundImage = `url(${croppedImageURL})`;
+            targetDiv.classList.add('has-image');
+
+            closeModal();
+        }
+
+        // 7. 一键下载功能 (使用 html2canvas)
+        function downloadReport() {
+            const element = document.getElementById("report-container");
+            
+            // 提示用户等待
+            const btn = document.querySelector('.controls button');
+            const originalText = btn.innerText;
+            btn.innerText = "生成中...";
+
+            // 为了保证清晰度，放大 scale
+            html2canvas(element, {
+                scale: 2, 
+                useCORS: true,
+                backgroundColor: "#ffffff" // 确保背景是白色的
+            }).then(canvas => {
+                // 创建下载链接
+                const link = document.createElement('a');
+                link.download = '2025_Annual_Report.png';
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+                
+                btn.innerText = originalText;
+            });
+        }
+    </script>
+</body>
+</html>
