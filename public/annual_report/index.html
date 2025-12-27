@@ -2,14 +2,14 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>2025 年度报告生成器</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
     <style>
         :root {
             --primary-color: #333;
             --bg-color: #f4f4f4;
-            --card-ratio: 1 / 1; /* 这里控制图片比例，1/1为正方形，4/3为矩形 */
+            --card-ratio: 1 / 1; 
         }
 
         body {
@@ -20,39 +20,44 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            /* 防止手机端左右晃动 */
+            overflow-x: hidden; 
         }
 
-        /* 控制按钮区域 */
         .controls {
             margin-bottom: 20px;
             display: flex;
             gap: 15px;
+            z-index: 10;
         }
 
         button {
-            padding: 10px 20px;
+            padding: 12px 24px;
             background-color: #2c3e50;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            font-weight: bold;
             transition: background 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        button:hover {
-            background-color: #1a252f;
+        button:active {
+            transform: scale(0.98);
         }
 
-        /* 报告主要区域 - 将会被截图的部分 */
+        /* --- 电脑端核心样式 (保持原样) --- */
         #report-container {
-            width: 1000px; /* 固定宽度以保证导出质量 */
+            width: 1000px; /* 电脑端固定宽度 */
             background-color: white;
             padding: 40px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
+            box-sizing: border-box; /* 确保padding不会撑大容器 */
         }
 
         .report-header {
@@ -73,7 +78,7 @@
             margin-top: 10px;
         }
 
-        /* 网格布局：3列 x 4行 = 12个月 */
+        /* 电脑端：3列布局 */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -89,13 +94,11 @@
             position: relative;
             cursor: pointer;
             transition: border-color 0.3s;
-            aspect-ratio: var(--card-ratio); /* 保持形状 */
+            aspect-ratio: var(--card-ratio);
             display: flex;
             flex-direction: column;
-        }
-
-        .month-card:hover {
-            border-color: #999;
+            /* 解决部分手机点击高亮背景问题 */
+            -webkit-tap-highlight-color: transparent; 
         }
 
         .month-label {
@@ -104,14 +107,14 @@
             left: 10px;
             background: rgba(0, 0, 0, 0.6);
             color: white;
-            padding: 5px 10px;
+            padding: 4px 8px;
             border-radius: 4px;
+            font-size: 14px;
             font-weight: bold;
             z-index: 2;
             pointer-events: none;
         }
 
-        /* 图片容器 */
         .img-placeholder {
             width: 100%;
             height: 100%;
@@ -124,61 +127,53 @@
             background-position: center;
             background-repeat: no-repeat;
         }
+        .img-placeholder::after { content: '+'; }
+        .img-placeholder.has-image::after { content: ''; }
 
-        .img-placeholder::after {
-            content: '+';
-        }
+        #file-input { display: none; }
 
-        /* 当有图片时，移除加号 */
-        .img-placeholder.has-image::after {
-            content: '';
-        }
-
-        /* 隐藏的文件输入框 */
-        #file-input {
-            display: none;
-        }
-
-        /* --- 裁剪弹窗样式 --- */
+        /* 裁剪弹窗 */
         #crop-modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 9999;
             justify-content: center;
             align-items: center;
             flex-direction: column;
         }
 
         .crop-container {
-            width: 80%;
-            height: 70%;
-            background: #333;
+            width: 90%;
+            height: 60%; /* 手机端稍微留出更多操作空间 */
+            background: #000;
             margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .crop-container img {
             max-width: 100%;
             max-height: 100%;
-            display: block;
         }
 
         .modal-buttons {
             display: flex;
-            gap: 20px;
+            gap: 15px;
+            width: 90%;
+            justify-content: center;
         }
 
-        .btn-cancel {
-            background-color: #e74c3c;
+        .modal-buttons button {
+            flex: 1; /* 按钮均分宽度 */
+            padding: 15px 0; /* 增大点击区域 */
         }
-        
-        .btn-confirm {
-            background-color: #27ae60;
-        }
+
+        .btn-cancel { background-color: #e74c3c; }
+        .btn-confirm { background-color: #27ae60; }
 
         .footer-note {
             margin-top: 30px;
@@ -186,6 +181,51 @@
             font-size: 0.8em;
         }
 
+        /* ========================================= */
+        /* ★★★ 手机端适配代码 (Media Queries) ★★★ */
+        /* ========================================= */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px; /* 减少边缘留白 */
+            }
+
+            /* 1. 容器宽度改为 100% 适配手机屏幕 */
+            #report-container {
+                width: 100%; 
+                padding: 20px 15px; /* 减少内边距 */
+            }
+
+            /* 2. 标题文字调小 */
+            .report-header h1 {
+                font-size: 1.8em; 
+            }
+            .report-header p {
+                font-size: 0.9em;
+            }
+
+            /* 3. 网格改为 2列 (2列 x 6行) */
+            /* 如果你想要手机是一列，就把下面的 2 改成 1 */
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 10px; /* 减小间距 */
+            }
+
+            /* 4. 调整月份标签大小 */
+            .month-label {
+                font-size: 12px;
+                padding: 2px 6px;
+                top: 5px;
+                left: 5px;
+            }
+
+            /* 5. 顶部按钮全宽，方便手指点击 */
+            .controls {
+                width: 100%;
+            }
+            .controls button {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -214,7 +254,7 @@
         </div>
         <div class="modal-buttons">
             <button class="btn-cancel" onclick="closeModal()">取消</button>
-            <button class="btn-confirm" onclick="confirmCrop()">✅ 确认裁剪</button>
+            <button class="btn-confirm" onclick="confirmCrop()">✅ 确认</button>
         </div>
     </div>
 
@@ -222,7 +262,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <script>
-        // 1. 初始化 12 个月的格子
+        // 逻辑保持完全一致
         const grid = document.getElementById('grid');
         const months = [
             "January", "February", "March", "April", "May", "June", 
@@ -232,7 +272,7 @@
         months.forEach((month, index) => {
             const card = document.createElement('div');
             card.className = 'month-card';
-            card.onclick = () => selectImage(index); // 绑定点击事件
+            card.onclick = () => selectImage(index);
             
             card.innerHTML = `
                 <div class="month-label">${index + 1} | ${month}</div>
@@ -241,49 +281,42 @@
             grid.appendChild(card);
         });
 
-        // 变量存储
-        let currentTargetIndex = null; // 当前正在编辑哪个月
-        let cropper = null; // 裁剪器实例
+        let currentTargetIndex = null;
+        let cropper = null;
         const fileInput = document.getElementById('file-input');
         const cropModal = document.getElementById('crop-modal');
         const imageToCrop = document.getElementById('image-to-crop');
 
-        // 2. 点击格子触发文件选择
         function selectImage(index) {
             currentTargetIndex = index;
-            fileInput.value = ''; // 清空上次的选择
+            fileInput.value = '';
             fileInput.click();
         }
 
-        // 3. 监听文件选择
         fileInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(event) {
                     imageToCrop.src = event.target.result;
-                    showModal(); // 显示裁剪窗口
+                    showModal();
                 };
                 reader.readAsDataURL(file);
             }
         });
 
-        // 4. 显示裁剪弹窗并初始化 Cropper
         function showModal() {
             cropModal.style.display = 'flex';
-            // 如果之前有实例，先销毁
-            if(cropper) {
-                cropper.destroy();
-            }
-            // 初始化裁剪器
+            if(cropper) cropper.destroy();
             cropper = new Cropper(imageToCrop, {
-                aspectRatio: 1 / 1, // 强制正方形 (对应CSS中的 card-ratio)
-                viewMode: 1, // 限制裁剪框不能超出图片范围
+                aspectRatio: 1 / 1,
+                viewMode: 1,
                 autoCropArea: 1,
+                minContainerWidth: 200, // 适配手机裁剪区
+                minContainerHeight: 200
             });
         }
 
-        // 5. 关闭弹窗
         function closeModal() {
             cropModal.style.display = 'none';
             if(cropper) {
@@ -292,48 +325,41 @@
             }
         }
 
-        // 6. 确认裁剪
         function confirmCrop() {
             if (!cropper) return;
-
-            // 获取裁剪后的图片 (Canvas)
-            const canvas = cropper.getCroppedCanvas({
-                width: 600, // 限制输出宽度，防止图片过大导致页面卡顿
-                height: 600
-            });
-
-            // 将 Canvas 转为 DataURL
-            const croppedImageURL = canvas.toDataURL('image/jpeg');
-
-            // 放置到对应的格子中
+            // 提高分辨率以适配手机高清屏
+            const canvas = cropper.getCroppedCanvas({ width: 800, height: 800 });
+            const croppedImageURL = canvas.toDataURL('image/jpeg', 0.9); // 0.9 质量
+            
             const targetDiv = document.getElementById(`month-img-${currentTargetIndex}`);
             targetDiv.style.backgroundImage = `url(${croppedImageURL})`;
             targetDiv.classList.add('has-image');
-
             closeModal();
         }
 
-        // 7. 一键下载功能 (使用 html2canvas)
         function downloadReport() {
             const element = document.getElementById("report-container");
-            
-            // 提示用户等待
             const btn = document.querySelector('.controls button');
             const originalText = btn.innerText;
             btn.innerText = "生成中...";
 
-            // 为了保证清晰度，放大 scale
+            // 使用 html2canvas 生成图片
             html2canvas(element, {
-                scale: 2, 
+                scale: 2, // 保持2倍清晰度
                 useCORS: true,
-                backgroundColor: "#ffffff" // 确保背景是白色的
+                backgroundColor: "#ffffff",
+                windowWidth: element.scrollWidth, // 确保截取完整宽度
+                windowHeight: element.scrollHeight
             }).then(canvas => {
-                // 创建下载链接
                 const link = document.createElement('a');
+                // 手机端通常通过长按保存，但这里尝试触发下载
                 link.download = '2025_Annual_Report.png';
                 link.href = canvas.toDataURL("image/png");
                 link.click();
-                
+                btn.innerText = originalText;
+            }).catch(err => {
+                console.error("生成失败", err);
+                alert("生成图片失败，请重试");
                 btn.innerText = originalText;
             });
         }
