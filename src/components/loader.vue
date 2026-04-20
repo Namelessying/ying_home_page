@@ -59,6 +59,7 @@ onUnmounted(() => clearInterval(timer))
 .cat-canvas {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
+  background-color: #fff; 
 }
 .cat-label {
   font-family: monospace;
