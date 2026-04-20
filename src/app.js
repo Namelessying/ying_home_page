@@ -118,12 +118,18 @@ export default {
               img.onerror = (err) => {reject(err);};
             }else{
               const video = this.$refs.VdPlayer;
+              // 3秒还没加载完就直接进去，不等了
+              const videoTimeout = setTimeout(() => {
+                  resolve();
+              }, 3000);
               video.onloadedmetadata = () => {
-                setTimeout(() => {
-                }, "200");  
-                resolve();
+                  clearTimeout(videoTimeout);
+                  resolve();
               };
-              video.onerror = (err) => {resolve();};
+              video.onerror = () => {
+                  clearTimeout(videoTimeout);
+                  resolve();
+              };
             }
           })
         });
