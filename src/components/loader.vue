@@ -26,12 +26,18 @@ function startAnim () {
   if (!canvas) return
   const ctx = canvas.getContext('2d')
   ctx.imageSmoothingEnabled = false
+
   function draw () {
-    ctx.fillStyle = '#282c34'      // ← 新增
-    ctx.fillRect(0, 0, W, H)    // ← 新增
+    // 每帧都先填充背景色
+    ctx.globalCompositeOperation = 'source-over'
+    ctx.fillStyle = '#282c34'
+    ctx.fillRect(0, 0, W, H)
+
+    // 再绘制当前帧
     ctx.drawImage(imgs[frame], 0, 0, W, H)
     frame = (frame + 1) % imgs.length
   }
+
   draw()
   timer = setInterval(draw, MS)
 }
