@@ -27,7 +27,7 @@ function startAnim () {
   const ctx = canvas.getContext('2d')
   ctx.imageSmoothingEnabled = false
   function draw () {
-    ctx.fillStyle = '#fff'      // ← 新增
+    ctx.fillStyle = '#282c34'      // ← 新增
     ctx.fillRect(0, 0, W, H)    // ← 新增
     ctx.clearRect(0, 0, W, H)   // ← 保留
     ctx.drawImage(imgs[frame], 0, 0, W, H)
@@ -59,7 +59,6 @@ onUnmounted(() => clearInterval(timer))
 .cat-canvas {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
-  background-color: #fff; 
 }
 .cat-label {
   font-family: monospace;
