@@ -160,10 +160,10 @@ const config = {
     {go:"📝 查看",img:"/img/source1.jpg",title:"MMD教程",subtitle:"MMD渲染教程", text:"整理了一系列MMD制作的基础教程，适合MMD新手学习。",url:"https://www.bilibili.com/opus/810409115569356817",show:false},
     {go:"📚 学习",img:"/img/source2.jpg",title:"知识分享",subtitle:"Notion学习笔记", text:"目前仅有《应用统计》。",url:"https://fancy-twine-71b.notion.site/namelessyingknowledge",show:false},
     {go:"📖 阅读",img:"/img/source3.jpg",title:"散漫想法",subtitle:"Notion故事分享", text:"闲暇之余写的故事集（基本都咕咕了）",url:"https://fancy-twine-71b.notion.site/yingdream",show:false},
-    {go:"🎮 模型",img:"/img/114514.png",title:"神秘彩蛋",subtitle:"压力马斯内", text:"这里有一些秘密，需要密码才能访问哦~",url:"/secret/",show:false},
+    {go:"🎮 彩蛋",img:"/img/114514.png",title:"神秘彩蛋",subtitle:"=压力马斯内=", text:"这里有一些秘密，需要密码才能访问哦~",url:"/secret/",show:false},
     {go:"💬 留言",img:"/img/1a04d0fc92c4668c45c996a1f1c3b641.png",title:"留言板",subtitle:"欢迎交流~", text:"欢迎在这里留下您的想法、建议或者问候！",url:"/messageboard/",show:false},
     {go:"🎬 撰写",img:"/img/annual.jpg",title:"年度总结",subtitle:"2025年度总结", text:"编织你的年度总结吧~",url:"/annual_report/",show:false},
-    {go:"🔧 暂无",img:"/img/sunshine.jpg",title:"暂无",subtitle:"暂无", text:"暂无",url:"www.namelessying.xin",show:false},
+    {go:"🔧 暂无",img:"/img/sunshine.jpg",title:"暂无",subtitle:"暂无", text:"暂无",url:"https://www.namelessying.xin",show:false},
   ],
   
   statement: ["备案号：XXICP备123456789号","Copyright © 2025 Leleo"],
