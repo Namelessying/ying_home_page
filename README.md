@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./img/website-preview.png" alt="流殇晓萤" width="800">
+  <img src="./img/website-previewnew.png" alt="流殇晓萤" width="800">
 </p>
 
 <h1 align="center">流殇晓萤 ✨</h1>
