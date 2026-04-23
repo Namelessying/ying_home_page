@@ -1,106 +1,105 @@
-# leleo-home-page 个人主页
+<p align="center">
+  <img src="./img/website-preview.png" alt="流殇晓萤" width="800">
+</p>
 
-## 目录
-- [项目简介](#项目简介)
-- [功能特性](#功能特性)  
-- [演示地址](#演示地址)
-- [技术栈](#技术栈)
-- [安装与运行](#安装与运行)
-  - [本地运行](#本地运行)
-  - [Vercel在线部署](#vercel在线部署)
-- [配置文件](#配置文件)
+<h1 align="center">流殇晓萤 ✨</h1>
 
+<p align="center">
+  <a href="https://www.namelessying.xin/">🌐 Live Demo</a> •
+  <a href="#功能特性">✨ Features</a> •
+  <a href="#快速开始">🚀 Quick Start</a> •
+  <a href="#配置">⚙️ Configuration</a>
+</p>
 
-## 项目简介
+---
 
-这是一个简单的个人主页项目，用于展示个人信息、技能、项目等。主页设计简洁、响应式，适合在不同设备上浏览。支持自定义配置。
-
-<img src="./img/leleo-home-page/1737532219807.png" width="600" alt="桌面端预览" style="display: block; margin: 10px auto;border-radius:8px;">
-<img src="./img/leleo-home-page/1737533474493.png" width="170" alt="移动端预览" style="display: block; margin: 10px auto;border-radius:8px;">
-<img src="./img/leleo-home-page/1737532290584.png" width="600" alt="功能预览1" style="display: block; margin: 10px auto;border-radius:8px;">
-<img src="./img/leleo-home-page/1737532316302.png" width="600" alt="功能预览2" style="display: block; margin: 10px auto;border-radius:8px;">
+> 简洁优雅的个人主页，展示作品集、博客与社交链接。支持响应式设计与个性化定制。
 
 ## 功能特性
 
-- **响应式设计**：适配桌面、平板和手机等不同设备
-- **个人信息展示**：包括头像、个性标签、简介、技能等
-- **项目展示**：展示项目，包括项目描述、技术栈和链接  
-- **预览配置**：支持主题、背景壁纸预览（包括动、静态/PC、移动端壁纸设置）以及音乐播放配置
-- **在线部署配置**：支持vercel一键部署及使用vercel环境变量进行在线自定义配置
+- 🎨 **精美设计** — 简洁优雅的视觉风格，支持深色/浅色模式
+- 📱 **响应式布局** — 完美适配桌面、平板和手机设备
+- 🎬 **精选作品** — MMD作品展示，支持B站视频外链
+- 📚 **博客资源** — MMD教程、学习笔记、知识分享等内容入口
+- 🔗 **社交链接** — 集成 GitHub、Twitter 等主流社交平台
+- 🎵 **音乐播放** — 支持背景音乐自定义播放
+- 🌄 **动态背景** — 支持视频背景和静态壁纸
+- ☁️ **一键部署** — 支持 Vercel 环境变量在线配置
 
-## 演示地址
+## 快速开始
 
-[在线演示](https://leleo.top)
-
-## 技术栈
-
-- **前端**：Vue
-- **UI框架**：Vuetify  
-- **构建工具**：Vite
-- **版本控制**：Git
-- **部署平台**：Vercel
-
-## 安装与运行
-
-### 本地运行
-
-1. 克隆仓库：
+### 克隆项目
 
 ```bash
-git clone https://github.com/leleo886/leleo-home-page.git
+git clone https://github.com/your-username/ying_home_page.git
+cd ying_home_page
 ```
 
-2. 进入项目目录：
-
-```bash
-cd leleo-home-page
-```
-
-3. 安装依赖：
+### 安装依赖
 
 ```bash
 npm install
 ```
 
-4. 启动开发服务器：
+### 启动开发服务器
 
 ```bash
 npm run dev
 ```
 
-### Vercel在线部署
+访问 `http://localhost:5173` 查看效果。
 
-> 无需服务器，点击链接一键在线部署到 [Vercel](https://vercel.com/new/clone?s=https://github.com/leleo886/leleo-home-page.git)（首先需要有github和vercel账号）
+## 部署
 
-![Vercel部署步骤1](./img/leleo-home-page/1737785497852.png)
+### Vercel 一键部署
 
-> ---登录vercel账号，并选择github关联账号，为项目取个名字，然后点击"Create"按钮开始部署
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?s=https://github.com/your-username/ying_home_page.git)
 
-![Vercel部署完成](./img/leleo-home-page/1737538980894.png)
+> 💡 无需服务器，点击链接即可完成部署（需 GitHub 和 Vercel 账号）
 
-> ---部署完成后，点击回到控制面板
+### 自定义域名
 
-![Vercel控制面板](./img/leleo-home-page/1737539171658.png)
+Vercel 提供的 `.vercel.app` 域名在中国大陆可能无法访问，建议绑定自己的域名。
 
-注意：Vercel提供的`.vercel.app`域名在中国大陆地区可能无法访问，所以建议绑定自定义域名。（若没有自己的域名，这里提供简单的[免费二级域名服务](https://sds.leleo.top)及本项目如何进行域名绑定的[说明](./img/domainToVercel.md)）
+## 配置
 
-## 配置文件
+### 方法一：修改配置文件
 
-方法1. 自己动手，有点麻烦
-> 自定义数据文件为项目src目录下面的 config.js，这里有[配置说明](./img/config.md)，然后就是代码的拉取、修改上传。
+编辑 `src/config.js` 文件来自定义个人信息、社交链接、背景设置等。
 
-方法2. vercel 环境变量，直接在线修改
-<p style="color: red;font-size:14px;">注意：此方法优先级高于方法1，若使用方法1请勿配置vercel环境变量</p> 
+### 方法二：Vercel 环境变量
 
-> (1). 首先还是打开vercel中本项目主面板，然后依次点击`Settings`、`Environments`、`Production`
-![Vercel控制面板](./img/leleo-home-page/1737624788108.png)
+1. 进入 Vercel 项目面板 → Settings → Environments → Production
+2. 添加环境变量：
+   - **Key**: `VITE_CONFIG`
+   - **Value**: 你的配置内容（JSON 格式）
+3. 点击 Redeploy 重新部署
 
-> (2). 然后下翻点击`Add Environment Variable`按钮，要求填入`Key`值为`VITE_CONFIG`,`Value`值如[环境变量值](./img/env.md)所示，全部复制粘贴即可（有点多），根据个人情况自定义修改，配置说明同方法1。
-![Vercel控制面板](./img/leleo-home-page/1737625015472.png)
+> ⚠️ 环境变量配置的优先级高于本地配置文件
 
-<p style="color: red;font-size:20px;margin-top:40px;">注意:</p>
+## 技术栈
 
-每次修改环境变量后还需重新部署，否则数据无法更新。重新部署如下图，依次点击`Project`、`Build Logs`，进入新页面后再找到`Redeploy`。最后等待重新部署完成即可。
+<p align="left">
+  <img src="https://img.shields.io/badge/Vue-3-42b883?logo=vue.js" alt="Vue">
+  <img src="https://img.shields.io/badge/Vuetify-3-1867c0?logo=vuetify" alt="Vuetify">
+  <img src="https://img.shields.io/badge/Vite-5-646cff?logo=vite" alt="Vite">
+  <img src="https://img.shields.io/badge/Platform-Vercel-black?logo=vercel" alt="Vercel">
+</p>
 
-![Vercel控制面板](./img/leleo-home-page/1737626184576.png)
-![Vercel控制面板](./img/leleo-home-page/1737626397809.png)
+## 项目结构
+
+```
+ying_home_page/
+├── src/
+│   ├── components/     # 组件
+│   ├── config.js       # 配置文件
+│   ├── App.vue         # 主应用
+│   └── main.js        # 入口文件
+├── public/            # 静态资源
+├── img/               # 图片资源
+└── package.json
+```
+
+## License
+
+MIT © [流殇晓萤](https://www.namelessying.xin/)
