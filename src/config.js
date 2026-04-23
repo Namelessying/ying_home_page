@@ -163,7 +163,7 @@ const config = {
     {go:"🎮 彩蛋",img:"/img/114514.png",title:"神秘彩蛋",subtitle:"=压力马斯内=", text:"这里有一些秘密，需要密码才能访问哦~",url:"/secret/",show:false},
     {go:"💬 留言",img:"/img/1a04d0fc92c4668c45c996a1f1c3b641.png",title:"留言板",subtitle:"欢迎交流~", text:"欢迎在这里留下您的想法、建议或者问候！",url:"/messageboard/",show:false},
     {go:"🎬 撰写",img:"/img/annual.jpg",title:"年度总结",subtitle:"2025年度总结", text:"编织你的年度总结吧~",url:"/annual_report/",show:false},
-    {go:"🔧 暂无",img:"/img/sunshine.jpg",title:"暂无",subtitle:"暂无", text:"暂无",url:"https://www.namelessying.xin",show:false},
+    {go:"🔧 AI",img:"/img/AI.jpg",title:"AI新闻",subtitle:"AI每日推送", text:"让小龙虾每天自己总结个报告=w=",url:"https://docs.qq.com/aio/p/scz6tia7n1hfqa1?p=sf6QaUA0wcdHuyUIQBaWKd&nlc=1",show:false},
   ],
   
   statement: ["备案号：XXICP备123456789号","Copyright © 2025 Leleo"],
