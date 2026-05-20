@@ -10,6 +10,7 @@
 <style>
   :root {
     --bg: #FFF6F0;
+    --accent: #FF8FAB;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -25,14 +26,12 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* ====== 背景 Canvas ====== */
   canvas#bg-canvas {
     position: fixed; inset: 0;
     z-index: 0;
     pointer-events: none;
   }
 
-  /* ====== 主容器 ====== */
   .main {
     position: fixed; inset: 0;
     z-index: 10;
@@ -52,9 +51,7 @@
     cursor: pointer;
     transition: transform .15s ease;
   }
-  .avatar-zone:active {
-    transform: scale(.92);
-  }
+  .avatar-zone:active { transform: scale(.92); }
   .avatar-zone.bounce {
     animation: avatarBounce .6s cubic-bezier(.34,1.56,.64,1);
   }
@@ -63,13 +60,6 @@
     40%  { transform: scale(1.10); }
     70%  { transform: scale(1.04); }
     100% { transform: scale(1); }
-  }
-
-  .avatar-ring {
-    position: absolute;
-    inset: -12%;
-    border-radius: 50%;
-    pointer-events: none;
   }
 
   .avatar-img {
@@ -86,7 +76,6 @@
     transition: box-shadow .5s ease;
   }
 
-  /* 光环 SVG 旋转 */
   .orbit-ring {
     position: absolute;
     inset: -8%;
@@ -205,36 +194,56 @@
     box-shadow: 0 4px 18px rgba(255,143,171,.2);
   }
 
-  /* ====== 设置按钮 ====== */
-  .settings-btn {
+  /* ====== 顶部按钮组 ====== */
+  .top-btns {
     position: fixed;
     top: 20px; right: 20px;
     z-index: 100;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .icon-btn {
     width: 44px; height: 44px;
     border-radius: 50%;
     border: 2px solid rgba(200,180,190,.3);
-    background: rgba(255,255,255,.7);
-    backdrop-filter: blur(8px);
+    background: rgba(255,255,255,.75);
+    backdrop-filter: blur(10px);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all .3s ease;
-    font-size: 20px;
+    font-size: 19px;
+    position: relative;
   }
-  .settings-btn:hover {
-    transform: rotate(60deg) scale(1.1);
+  .icon-btn:hover {
     border-color: rgba(255,143,171,.5);
-    background: rgba(255,255,255,.9);
-    box-shadow: 0 4px 16px rgba(255,143,171,.2);
+    background: rgba(255,255,255,.95);
+    box-shadow: 0 4px 18px rgba(255,143,171,.2);
   }
+  .icon-btn.settings-btn:hover { transform: rotate(60deg) scale(1.1); }
+  .icon-btn.share-btn:hover { transform: scale(1.12); }
 
-  /* ====== 设置面板 ====== */
-  .settings-overlay {
+  /* 分享按钮徽章 */
+  .share-badge {
+    position: absolute;
+    top: -3px; right: -3px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF8FAB, #FFB3C6);
+    border: 2px solid white;
+    display: none;
+  }
+  .share-badge.show { display: block; }
+
+  /* ====== 弹窗通用 ====== */
+  .overlay {
     position: fixed; inset: 0;
     z-index: 200;
-    background: rgba(0,0,0,.35);
-    backdrop-filter: blur(6px);
+    background: rgba(0,0,0,.38);
+    backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -242,65 +251,74 @@
     pointer-events: none;
     transition: opacity .35s ease;
   }
-  .settings-overlay.show {
+  .overlay.show {
     opacity: 1;
     pointer-events: all;
   }
 
-  .settings-panel {
-    background: #fff;
-    border-radius: 24px;
+  .panel {
+    background: rgba(255,255,255,.96);
+    border-radius: 28px;
     padding: 36px 32px 28px;
-    width: 380px;
+    width: 400px;
     max-width: 92vw;
-    box-shadow: 0 20px 60px rgba(0,0,0,.15);
-    transform: translateY(30px) scale(.95);
-    transition: transform .35s cubic-bezier(.34,1.56,.64,1);
+    box-shadow:
+      0 2px 0 rgba(255,255,255,.8) inset,
+      0 24px 64px rgba(180,120,140,.18),
+      0 8px 24px rgba(0,0,0,.08);
+    transform: translateY(32px) scale(.95);
+    transition: transform .38s cubic-bezier(.34,1.56,.64,1);
+    border: 1.5px solid rgba(255,220,230,.6);
   }
-  .settings-overlay.show .settings-panel {
+  .overlay.show .panel {
     transform: translateY(0) scale(1);
   }
 
-  .settings-panel h2 {
+  .panel-title {
     font-family: 'Noto Sans SC', sans-serif;
     font-size: 20px;
     font-weight: 700;
     color: #4a3a40;
     margin-bottom: 24px;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
   }
 
-  .form-group {
-    margin-bottom: 20px;
-  }
+  .form-group { margin-bottom: 18px; }
   .form-group label {
     display: block;
-    font-size: 13px;
-    font-weight: 500;
-    color: #8a7a80;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #9a8890;
     margin-bottom: 8px;
-    letter-spacing: .05em;
+    letter-spacing: .06em;
+    text-transform: uppercase;
   }
 
   .form-group input[type="text"] {
     width: 100%;
     padding: 12px 16px;
-    border: 2px solid rgba(200,180,190,.3);
+    border: 2px solid rgba(200,180,190,.25);
     border-radius: 14px;
     font-size: 15px;
     font-family: 'Noto Sans SC', sans-serif;
     outline: none;
     transition: border-color .3s ease, box-shadow .3s ease;
-    background: #faf8f5;
+    background: rgba(255,248,244,.8);
+    color: #3a2a30;
   }
   .form-group input[type="text"]:focus {
-    border-color: rgba(255,143,171,.6);
+    border-color: rgba(255,143,171,.55);
     box-shadow: 0 0 0 4px rgba(255,143,171,.1);
+    background: #fff;
   }
 
   .avatar-upload-area {
     width: 100%;
-    height: 140px;
+    height: 130px;
     border: 2.5px dashed rgba(200,180,190,.4);
     border-radius: 16px;
     display: flex;
@@ -309,29 +327,21 @@
     justify-content: center;
     cursor: pointer;
     transition: all .3s ease;
-    background: #faf8f5;
+    background: rgba(255,248,244,.8);
     position: relative;
     overflow: hidden;
   }
   .avatar-upload-area:hover {
-    border-color: rgba(255,143,171,.5);
+    border-color: rgba(255,143,171,.55);
     background: rgba(255,143,171,.04);
   }
   .avatar-upload-area.has-image {
     border-style: solid;
-    border-color: rgba(255,143,171,.3);
+    border-color: rgba(255,143,171,.35);
   }
-  .avatar-upload-area input[type="file"] {
-    display: none;
-  }
-  .avatar-upload-area .upload-icon {
-    font-size: 32px;
-    margin-bottom: 6px;
-  }
-  .avatar-upload-area .upload-text {
-    font-size: 13px;
-    color: #aaa0a5;
-  }
+  .avatar-upload-area input[type="file"] { display: none; }
+  .avatar-upload-area .upload-icon { font-size: 30px; margin-bottom: 6px; }
+  .avatar-upload-area .upload-text { font-size: 13px; color: #b0a0a8; }
   .avatar-upload-area .preview-img {
     width: 100%; height: 100%;
     object-fit: cover;
@@ -340,8 +350,8 @@
 
   .btn-row {
     display: flex;
-    gap: 12px;
-    margin-top: 24px;
+    gap: 10px;
+    margin-top: 22px;
   }
   .btn-confirm, .btn-cancel {
     flex: 1;
@@ -355,28 +365,120 @@
     font-family: 'Noto Sans SC', sans-serif;
   }
   .btn-confirm {
-    background: linear-gradient(135deg, #FF8FAB, #FFB3C6);
+    background: linear-gradient(135deg, #FF8FAB 0%, #FFB3C6 100%);
     color: #fff;
-    box-shadow: 0 4px 16px rgba(255,143,171,.3);
+    box-shadow: 0 4px 18px rgba(255,143,171,.35);
+    letter-spacing: .05em;
   }
   .btn-confirm:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(255,143,171,.4);
+    box-shadow: 0 8px 26px rgba(255,143,171,.45);
   }
   .btn-cancel {
-    background: #f0ebe8;
+    background: rgba(240,235,232,.8);
     color: #8a7a80;
   }
-  .btn-cancel:hover {
-    background: #e8e0dc;
+  .btn-cancel:hover { background: #e8e0dc; }
+
+  .panel-footer {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 12px;
+    color: #c8b8c0;
+    letter-spacing: .04em;
   }
 
-  .settings-footer {
-    text-align: center;
-    margin-top: 16px;
-    font-size: 12px;
-    color: #c0b0b5;
+  /* ====== 分享面板专属样式 ====== */
+  .share-preview {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: linear-gradient(135deg, rgba(255,143,171,.08), rgba(255,200,210,.05));
+    border: 1.5px solid rgba(255,143,171,.2);
+    border-radius: 18px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+  }
+  .share-avatar {
+    width: 54px; height: 54px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2.5px solid rgba(255,143,171,.3);
+    box-shadow: 0 4px 16px rgba(255,143,171,.2);
+  }
+  .share-info { flex: 1; min-width: 0; }
+  .share-name {
+    font-weight: 700;
+    font-size: 16px;
+    color: #3a2a30;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .share-subtitle {
+    font-size: 12.5px;
+    color: #C86B85;
     letter-spacing: .05em;
+  }
+
+  .share-link-wrap {
+    background: rgba(255,248,244,.9);
+    border: 2px solid rgba(200,180,190,.25);
+    border-radius: 14px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    transition: border-color .3s;
+  }
+  .share-link-wrap:hover { border-color: rgba(255,143,171,.4); }
+  .share-link-text {
+    flex: 1;
+    font-size: 12.5px;
+    color: #8a7a80;
+    word-break: break-all;
+    line-height: 1.5;
+    font-family: 'Nunito', monospace;
+  }
+  .copy-btn {
+    flex-shrink: 0;
+    padding: 7px 14px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(135deg, #FF8FAB, #FFB3C6);
+    color: #fff;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .25s ease;
+    white-space: nowrap;
+    font-family: 'Noto Sans SC', sans-serif;
+    letter-spacing: .03em;
+  }
+  .copy-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(255,143,171,.4);
+  }
+  .copy-btn.copied {
+    background: linear-gradient(135deg, #78C8A8, #A0DCC0);
+  }
+
+  .share-tip {
+    text-align: center;
+    font-size: 12px;
+    color: #c8b8c0;
+    letter-spacing: .04em;
+    line-height: 1.6;
+  }
+
+  /* ====== 分割线 ====== */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(200,180,190,.3), transparent);
+    margin: 18px 0;
   }
 
   /* ====== 响应式 ====== */
@@ -388,8 +490,9 @@
     .hint-text { font-size: 2.4vw; }
     .orbit-ring:nth-child(2) { inset: -20%; }
     .orbit-ring:nth-child(3) { inset: -28%; }
-    .settings-btn { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 17px; }
-    .settings-panel { padding: 28px 20px 20px; }
+    .top-btns { top: 12px; right: 12px; }
+    .icon-btn { width: 38px; height: 38px; font-size: 16px; }
+    .panel { padding: 26px 18px 20px; }
   }
 </style>
 </head>
@@ -397,13 +500,19 @@
 
 <canvas id="bg-canvas"></canvas>
 
-<!-- 设置按钮 -->
-<button class="settings-btn" id="settingsBtn" title="自定义设置">⚙️</button>
+<!-- 顶部按钮组 -->
+<div class="top-btns">
+  <button class="icon-btn share-btn" id="shareBtn" title="分享给朋友">
+    🔗
+    <span class="share-badge" id="shareBadge"></span>
+  </button>
+  <button class="icon-btn settings-btn" id="settingsBtn" title="自定义设置">⚙️</button>
+</div>
 
 <!-- 设置面板 -->
-<div class="settings-overlay" id="settingsOverlay">
-  <div class="settings-panel">
-    <h2>✨ 自定义猪猪认证</h2>
+<div class="overlay" id="settingsOverlay">
+  <div class="panel">
+    <p class="panel-title">✨ 自定义猪猪认证</p>
     <div class="form-group">
       <label>🏷️ 名字</label>
       <input type="text" id="nameInput" placeholder="输入Ta的名字..." maxlength="20">
@@ -420,7 +529,36 @@
       <button class="btn-cancel" id="btnCancel">取消</button>
       <button class="btn-confirm" id="btnConfirm">生成认证 ✅</button>
     </div>
-    <p class="settings-footer">点击右上角 ⚙️ 随时修改</p>
+    <p class="panel-footer">点击右上角 ⚙️ 随时修改</p>
+  </div>
+</div>
+
+<!-- 分享面板 -->
+<div class="overlay" id="shareOverlay">
+  <div class="panel">
+    <p class="panel-title">🔗 分享猪猪认证</p>
+
+    <div class="share-preview">
+      <img class="share-avatar" id="shareAvatar" src="" alt="">
+      <div class="share-info">
+        <p class="share-name" id="shareName">猪猪</p>
+        <p class="share-subtitle">官方猪猪认证 · 永久有效</p>
+      </div>
+    </div>
+
+    <div class="share-link-wrap">
+      <span class="share-link-text" id="shareLinkText">生成中…</span>
+      <button class="copy-btn" id="copyBtn">复制</button>
+    </div>
+
+    <p class="share-tip">
+      把链接发给朋友 🐷<br>
+      Ta 打开就能看到专属的猪猪认证啦~
+    </p>
+
+    <div class="divider"></div>
+
+    <button class="btn-cancel" style="width:100%;border-radius:14px;padding:11px 0;font-size:14px;font-weight:600;font-family:'Noto Sans SC',sans-serif;cursor:pointer;border:none;transition:all .25s;" id="btnShareClose">关闭</button>
   </div>
 </div>
 
@@ -471,7 +609,7 @@
 
 <script>
 // ============================================================
-// 默认头像（圆形灰色占位）
+// 默认头像
 // ============================================================
 const DEFAULT_AVATAR = 'data:image/svg+xml,' + encodeURIComponent(
   '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">' +
@@ -501,12 +639,8 @@ const titlePrefix = document.getElementById('titlePrefix');
 const avatarZone = document.getElementById('avatarZone');
 const avatarImg = document.getElementById('avatarImg');
 const hintText = document.getElementById('hintText');
-const mainContent = document.getElementById('mainContent');
 let currentTitle = '猪猪';
-let autoTimer = null;
 let clickCount = 0;
-
-// 当前用户名
 let userName = '';
 
 function setTitle(title) {
@@ -527,13 +661,6 @@ function randomTitle(exclude) {
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
-function startAuto() {
-  clearInterval(autoTimer);
-  autoTimer = setInterval(() => {
-    setTitle(randomTitle(currentTitle));
-  }, 4200);
-}
-
 function updatePrefix() {
   const name = userName || 'Ta';
   titlePrefix.textContent = name + ' 是';
@@ -542,7 +669,7 @@ function updatePrefix() {
 }
 
 // ============================================================
-// 设置面板逻辑
+// 设置面板
 // ============================================================
 const settingsBtn = document.getElementById('settingsBtn');
 const settingsOverlay = document.getElementById('settingsOverlay');
@@ -551,48 +678,40 @@ const uploadArea = document.getElementById('uploadArea');
 const avatarFileInput = document.getElementById('avatarFileInput');
 const btnConfirm = document.getElementById('btnConfirm');
 const btnCancel = document.getElementById('btnCancel');
-
+const shareBadge = document.getElementById('shareBadge');
 let pendingAvatarSrc = null;
+// 当前已确认的头像 src（用于页面显示）
+let currentAvatarSrc = '';
+// 当前分享用的压缩编码（url-safe，无前缀）
+let currentShareCode = '';
 
 settingsBtn.addEventListener('click', () => {
   nameInput.value = userName;
   pendingAvatarSrc = null;
   uploadArea.classList.remove('has-image');
   uploadArea.innerHTML = '<span class="upload-icon">📤</span><span class="upload-text">点击或拖拽上传头像</span>';
+  const fi = document.createElement('input');
+  fi.type = 'file'; fi.id = 'avatarFileInput'; fi.accept = 'image/*'; fi.style.display = 'none';
+  uploadArea.appendChild(fi);
+  fi.addEventListener('change', (e) => { if (e.target.files[0]) handleFile(e.target.files[0]); });
+  uploadArea.onclick = () => fi.click();
   settingsOverlay.classList.add('show');
   setTimeout(() => nameInput.focus(), 350);
 });
 
-btnCancel.addEventListener('click', closeSettings);
-
-settingsOverlay.addEventListener('click', (e) => {
-  if (e.target === settingsOverlay) closeSettings();
-});
-
-function closeSettings() {
-  settingsOverlay.classList.remove('show');
-}
-
-// 文件上传
-uploadArea.addEventListener('click', () => avatarFileInput.click());
+btnCancel.addEventListener('click', () => settingsOverlay.classList.remove('show'));
+settingsOverlay.addEventListener('click', (e) => { if (e.target === settingsOverlay) settingsOverlay.classList.remove('show'); });
 
 uploadArea.addEventListener('dragover', (e) => {
   e.preventDefault();
   uploadArea.style.borderColor = 'rgba(255,143,171,.7)';
 });
-uploadArea.addEventListener('dragleave', () => {
-  uploadArea.style.borderColor = '';
-});
+uploadArea.addEventListener('dragleave', () => { uploadArea.style.borderColor = ''; });
 uploadArea.addEventListener('drop', (e) => {
   e.preventDefault();
   uploadArea.style.borderColor = '';
   const file = e.dataTransfer.files[0];
   if (file && file.type.startsWith('image/')) handleFile(file);
-});
-
-avatarFileInput.addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  if (file) handleFile(file);
 });
 
 function handleFile(file) {
@@ -605,101 +724,163 @@ function handleFile(file) {
   reader.readAsDataURL(file);
 }
 
+// 极致压缩：56×56 JPEG，质量 0.35，去掉前缀后约 300-500 字符
+function compressImage(src, callback) {
+  const img = new Image();
+  img.onload = () => {
+    const canvas = document.createElement('canvas');
+    let w = img.width, h = img.height, max = 56;
+    if (w > h) { if (w > max) { h = Math.round(h * max / w); w = max; } }
+    else       { if (h > max) { w = Math.round(w * max / h); h = max; } }
+    canvas.width = w; canvas.height = h;
+    const c = canvas.getContext('2d');
+    c.drawImage(img, 0, 0, w, h);
+    const full = canvas.toDataURL('image/jpeg', 0.35);
+    // 只取纯 base64，切掉前缀 "data:image/jpeg;base64,"
+    const b64 = full.split(',')[1];
+    // URL-safe：+→-  /→_  去掉=
+    const safe = b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    callback(full, safe);
+  };
+  img.src = src;
+}
+
 // 确认生成
 btnConfirm.addEventListener('click', () => {
   userName = nameInput.value.trim();
 
+  const doFinish = (avatarSrc, shareCode) => {
+    currentAvatarSrc = avatarSrc;
+    if (shareCode) currentShareCode = shareCode;
+    avatarImg.src = avatarSrc;
+    try { localStorage.setItem('pig_avatar', avatarSrc); } catch(e) {}
+    if (currentShareCode) {
+      try { localStorage.setItem('pig_share_code', currentShareCode); } catch(e) {}
+    }
+
+    if (userName) {
+      try { localStorage.setItem('pig_name', userName); } catch(e) {}
+    } else {
+      try { localStorage.removeItem('pig_name'); } catch(e) {}
+    }
+
+    updatePrefix();
+    settingsOverlay.classList.remove('show');
+    spawnBurst(40);
+    sfx.init();
+    sfx.resume();
+    sfx.burst();
+    shareBadge.classList.add('show');
+    setTimeout(() => shareBadge.classList.remove('show'), 5000);
+  };
+
   if (pendingAvatarSrc) {
-    avatarImg.src = pendingAvatarSrc;
-    // 保存到 localStorage
-    try { localStorage.setItem('pig_avatar', pendingAvatarSrc); } catch(e) {}
-  }
-
-  if (userName) {
-    try { localStorage.setItem('pig_name', userName); } catch(e) {}
+    compressImage(pendingAvatarSrc, (fullSrc, urlSafe) => {
+      doFinish(fullSrc, urlSafe);
+    });
   } else {
-    try { localStorage.removeItem('pig_name'); } catch(e) {}
+    doFinish(currentAvatarSrc || DEFAULT_AVATAR, currentShareCode);
   }
+});
 
-  updatePrefix();
-  closeSettings();
+// ============================================================
+// 分享面板
+// ============================================================
+const shareBtn = document.getElementById('shareBtn');
+const shareOverlay = document.getElementById('shareOverlay');
+const shareAvatar = document.getElementById('shareAvatar');
+const shareName = document.getElementById('shareName');
+const shareLinkText = document.getElementById('shareLinkText');
+const copyBtn = document.getElementById('copyBtn');
+const btnShareClose = document.getElementById('btnShareClose');
 
-  // 粒子爆炸庆祝
-  spawnBurst(40);
-  sfx.init();
-  sfx.resume();
-  sfx.burst();
+function buildShareUrl() {
+  const base = window.location.href.split('?')[0].split('#')[0];
+  // 短链接格式：page.html#n=小名&a=压缩编码
+  const parts = [];
+  if (userName) parts.push('n=' + encodeURIComponent(userName));
+  if (currentShareCode) parts.push('a=' + currentShareCode);
+  return parts.length ? base + '#' + parts.join('&') : base;
+}
+
+shareBtn.addEventListener('click', () => {
+  shareAvatar.src = currentAvatarSrc || DEFAULT_AVATAR;
+  shareName.textContent = userName || '猪猪';
+  const url = buildShareUrl();
+  shareLinkText.textContent = url;
+  shareOverlay.classList.add('show');
+});
+
+btnShareClose.addEventListener('click', () => shareOverlay.classList.remove('show'));
+shareOverlay.addEventListener('click', (e) => { if (e.target === shareOverlay) shareOverlay.classList.remove('show'); });
+
+copyBtn.addEventListener('click', () => {
+  const url = shareLinkText.textContent;
+  if (!url || url === '生成中…') return;
+  navigator.clipboard.writeText(url).then(() => {
+    copyBtn.textContent = '已复制 ✓';
+    copyBtn.classList.add('copied');
+    setTimeout(() => { copyBtn.textContent = '复制'; copyBtn.classList.remove('copied'); }, 2000);
+  }).catch(() => {
+    // 降级：选中文字
+    const range = document.createRange();
+    const sel = window.getSelection();
+    range.selectNodeContents(shareLinkText);
+    sel.removeAllRanges();
+    sel.addRange(range);
+    copyBtn.textContent = '已选中 ✓';
+    setTimeout(() => { copyBtn.textContent = '复制'; }, 2000);
+  });
 });
 
 // ============================================================
 // Web Audio 8-bit 音效引擎
 // ============================================================
 class SoundEngine {
-  constructor() {
-    this.ctx = null;
-    this.lastTime = 0;
-    this.noteIdx = 0;
-  }
+  constructor() { this.ctx = null; this.lastTime = 0; this.noteIdx = 0; }
   init() {
     if (this.ctx) return;
     const AC = window.AudioContext || window.webkitAudioContext;
     if (!AC) return;
     this.ctx = new AC();
   }
-  resume() {
-    if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
-  }
-
+  resume() { if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume(); }
   ping() {
     if (!this.ctx) return;
     const now = this.ctx.currentTime;
     const gap = Date.now() - this.lastTime;
     this.lastTime = Date.now();
-
-    if (gap < 420) {
-      this.noteIdx++;
-    } else {
-      this.noteIdx = 0;
-    }
-
+    if (gap < 420) this.noteIdx++; else this.noteIdx = 0;
     const pent = [0, 2, 4, 7, 9];
     const oct = Math.floor(this.noteIdx / 5);
     const semitone = pent[this.noteIdx % 5];
     const freq = 523.25 * Math.pow(2, (semitone + oct * 12) / 12);
-
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
     osc.type = 'square';
     osc.frequency.value = freq;
     gain.gain.setValueAtTime(0.22, now);
     gain.gain.exponentialRampToValueAtTime(0.005, now + 0.11);
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
-    osc.start(now);
-    osc.stop(now + 0.14);
+    osc.connect(gain); gain.connect(this.ctx.destination);
+    osc.start(now); osc.stop(now + 0.14);
   }
-
   burst() {
     if (!this.ctx) return;
     const now = this.ctx.currentTime;
-    const len = 0.07;
-    const sr = this.ctx.sampleRate;
+    const len = 0.07, sr = this.ctx.sampleRate;
     const buf = this.ctx.createBuffer(1, sr * len, sr);
     const d = buf.getChannelData(0);
-    for (let i = 0; i < d.length; i++) {
+    for (let i = 0; i < d.length; i++)
       d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 2.5);
-    }
     const src = this.ctx.createBufferSource();
     src.buffer = buf;
     const gain = this.ctx.createGain();
     gain.gain.setValueAtTime(0.10, now);
     gain.gain.exponentialRampToValueAtTime(0.001, now + len);
-    src.connect(gain);
-    gain.connect(this.ctx.destination);
+    src.connect(gain); gain.connect(this.ctx.destination);
     src.start(now);
   }
 }
-
 const sfx = new SoundEngine();
 
 // ============================================================
@@ -707,12 +888,12 @@ const sfx = new SoundEngine();
 // ============================================================
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
-let W, H, cx, cy, avatarR;
+let W, H, cx, cy;
 
 const PALETTE = [
-  '#FFB3C6', '#FFC8A0', '#FFE0B8', '#E8B8D0', '#C8A8E0',
-  '#B8C8F0', '#A0D8D0', '#FFD8A0', '#F0A8B8', '#D0B8E8',
-  '#FFC0D0', '#E0C8F0', '#C0E0D8', '#FFB8D0', '#F8C8B0',
+  '#FFB3C6','#FFC8A0','#FFE0B8','#E8B8D0','#C8A8E0',
+  '#B8C8F0','#A0D8D0','#FFD8A0','#F0A8B8','#D0B8E8',
+  '#FFC0D0','#E0C8F0','#C0E0D8','#FFB8D0','#F8C8B0',
 ];
 
 function resize() {
@@ -721,7 +902,6 @@ function resize() {
   const rect = avatarZone.getBoundingClientRect();
   cx = rect.left + rect.width / 2;
   cy = rect.top + rect.height / 2;
-  avatarR = Math.min(rect.width, rect.height) / 2;
 }
 window.addEventListener('resize', resize);
 resize();
@@ -739,32 +919,25 @@ class Particle {
     this.life = 1;
     this.decay = opts.decay || (0.0003 + Math.random() * 0.0008);
     this.phase = Math.random() * Math.PI * 2;
-    this.amp = opts.amp || (0.3 + Math.random() * 1.5);
   }
-
   update() {
     if (this.type === 'ambient') {
       this.vx += Math.sin(this.phase + performance.now() * 0.001) * 0.015;
       this.vy += Math.cos(this.phase + performance.now() * 0.0013) * 0.015;
-      this.vx *= 0.998;
-      this.vy *= 0.998;
-      this.x += this.vx;
-      this.y += this.vy;
+      this.vx *= 0.998; this.vy *= 0.998;
+      this.x += this.vx; this.y += this.vy;
       if (this.x < -20) this.x = W + 20;
       if (this.x > W + 20) this.x = -20;
       if (this.y < -20) this.y = H + 20;
       if (this.y > H + 20) this.y = -20;
       this.opacity = 0.18 + Math.sin(this.phase + performance.now() * 0.002) * 0.1;
     } else if (this.type === 'burst') {
-      this.x += this.vx;
-      this.y += this.vy;
-      this.vx *= 0.96;
-      this.vy *= 0.96;
+      this.x += this.vx; this.y += this.vy;
+      this.vx *= 0.96; this.vy *= 0.96;
       this.life -= this.decay;
       this.size *= 0.995;
     }
   }
-
   draw(ctx) {
     const alpha = this.type === 'burst'
       ? Math.max(0, this.life * this.opacity)
@@ -776,35 +949,24 @@ class Particle {
     ctx.fill();
     ctx.globalAlpha = 1;
   }
-
-  alive() {
-    return this.type === 'ambient' || this.life > 0.02;
-  }
+  alive() { return this.type === 'ambient' || this.life > 0.02; }
 }
 
 let particles = [];
 const AMBIENT_COUNT = 80;
-
-function initAmbient() {
-  for (let i = 0; i < AMBIENT_COUNT; i++) {
-    particles.push(new Particle('ambient'));
-  }
-}
-initAmbient();
+for (let i = 0; i < AMBIENT_COUNT; i++) particles.push(new Particle('ambient'));
 
 function spawnBurst(count = 28) {
   resize();
   for (let i = 0; i < count; i++) {
     const angle = Math.random() * Math.PI * 2;
     const speed = 2.5 + Math.random() * 8;
-    const vx = Math.cos(angle) * speed;
-    const vy = Math.sin(angle) * speed;
-    const color = PALETTE[Math.floor(Math.random() * PALETTE.length)];
     particles.push(new Particle('burst', {
       x: cx, y: cy,
-      vx, vy,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
       size: 2 + Math.random() * 6,
-      color,
+      color: PALETTE[Math.floor(Math.random() * PALETTE.length)],
       opacity: 0.6 + Math.random() * 0.4,
       decay: 0.012 + Math.random() * 0.025,
     }));
@@ -813,12 +975,9 @@ function spawnBurst(count = 28) {
 
 function render() {
   ctx.clearRect(0, 0, W, H);
-
   const t = performance.now() * 0.0003;
   const g1 = ctx.createRadialGradient(
-    W * 0.5 + Math.sin(t) * W * 0.08,
-    H * 0.45 + Math.cos(t * 1.3) * H * 0.06,
-    W * 0.06,
+    W * 0.5 + Math.sin(t) * W * 0.08, H * 0.45 + Math.cos(t * 1.3) * H * 0.06, W * 0.06,
     W * 0.5, H * 0.5, W * 1.2
   );
   g1.addColorStop(0, 'rgba(255,180,200,0.18)');
@@ -826,45 +985,29 @@ function render() {
   g1.addColorStop(0.5, 'rgba(210,180,230,0.06)');
   g1.addColorStop(0.75, 'rgba(180,200,235,0.04)');
   g1.addColorStop(1, 'rgba(255,245,235,0)');
-  ctx.fillStyle = g1;
-  ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = g1; ctx.fillRect(0, 0, W, H);
 
-  const g2 = ctx.createRadialGradient(
-    W * 0.35, H * 0.6, W * 0.03,
-    W * 0.45, H * 0.55, W * 0.8
-  );
+  const g2 = ctx.createRadialGradient(W*0.35, H*0.6, W*0.03, W*0.45, H*0.55, W*0.8);
   g2.addColorStop(0, 'rgba(200,160,220,0.10)');
   g2.addColorStop(0.4, 'rgba(180,190,225,0.05)');
   g2.addColorStop(1, 'rgba(0,0,0,0)');
-  ctx.fillStyle = g2;
-  ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = g2; ctx.fillRect(0, 0, W, H);
 
-  particles = particles.filter(p => {
-    p.update();
-    return p.alive();
-  });
-
-  const ambientNow = particles.filter(p => p.type === 'ambient').length;
-  if (ambientNow < AMBIENT_COUNT - 5) {
-    for (let i = 0; i < AMBIENT_COUNT - ambientNow; i++) {
-      particles.push(new Particle('ambient'));
-    }
+  particles = particles.filter(p => { p.update(); return p.alive(); });
+  const ac = particles.filter(p => p.type === 'ambient').length;
+  if (ac < AMBIENT_COUNT - 5) {
+    for (let i = 0; i < AMBIENT_COUNT - ac; i++) particles.push(new Particle('ambient'));
   }
-
-  for (const p of particles) {
-    p.draw(ctx);
-  }
-
+  for (const p of particles) p.draw(ctx);
   requestAnimationFrame(render);
 }
 render();
 
 // ============================================================
-// 交互逻辑
+// 交互：只有点头像才切换称号（不自动轮换）
 // ============================================================
 avatarZone.addEventListener('click', (e) => {
   e.preventDefault();
-
   sfx.init();
   sfx.resume();
 
@@ -873,9 +1016,7 @@ avatarZone.addEventListener('click', (e) => {
   clickCount++;
 
   sfx.ping();
-  if (clickCount > 0 && clickCount % 5 === 0) {
-    sfx.burst();
-  }
+  if (clickCount > 0 && clickCount % 5 === 0) sfx.burst();
 
   spawnBurst(26 + Math.floor(Math.random() * 12));
 
@@ -883,11 +1024,7 @@ avatarZone.addEventListener('click', (e) => {
   void avatarZone.offsetWidth;
   avatarZone.classList.add('bounce');
 
-  startAuto();
-
-  if (clickCount >= 3) {
-    hintText.style.opacity = '0';
-  }
+  if (clickCount >= 3) hintText.style.opacity = '0';
 });
 
 avatarZone.addEventListener('touchstart', (e) => {
@@ -896,30 +1033,51 @@ avatarZone.addEventListener('touchstart', (e) => {
 }, { passive: false });
 
 // ============================================================
-// 初始化：从 localStorage 或 URL 参数加载
+// 初始化：解析 hash 或 query 参数
 // ============================================================
 function init() {
-  // URL 参数支持: ?name=xxx&avatar=xxx
-  const params = new URLSearchParams(window.location.search);
-  const urlName = params.get('name');
-  const urlAvatar = params.get('avatar');
+  // 新格式 hash: #n=小名&a=压缩编码
+  let urlName = '', urlAvatarCode = '';
+  const hash = window.location.hash.slice(1);
+  if (hash) {
+    const hp = new URLSearchParams(hash);
+    urlName = hp.get('n') || '';
+    urlAvatarCode = hp.get('a') || '';
+  }
+  // 兼容旧格式 query
+  if (!urlName) {
+    const qp = new URLSearchParams(window.location.search);
+    urlName = qp.get('name') || '';
+  }
 
-  // localStorage 恢复
   const savedName = localStorage.getItem('pig_name') || '';
   const savedAvatar = localStorage.getItem('pig_avatar') || '';
+  const savedShareCode = localStorage.getItem('pig_share_code') || '';
 
   userName = urlName || savedName;
 
-  const avatarSrc = urlAvatar || savedAvatar || DEFAULT_AVATAR;
-  avatarImg.src = avatarSrc;
+  if (urlAvatarCode) {
+    let b64 = urlAvatarCode.replace(/-/g, '+').replace(/_/g, '/');
+    while (b64.length % 4) b64 += '=';
+    currentAvatarSrc = 'data:image/jpeg;base64,' + b64;
+    currentShareCode = urlAvatarCode;
+  } else {
+    currentAvatarSrc = savedAvatar || DEFAULT_AVATAR;
+    currentShareCode = savedShareCode;
+  }
 
+  avatarImg.src = currentAvatarSrc;
   updatePrefix();
-  startAuto();
+  // 不再调用 startAuto()，称号只在点击时变化
 
-  // 如果没有任何配置，自动弹出设置面板
-  if (!userName && !savedAvatar && !urlName && !urlAvatar) {
+  if (!userName && !savedAvatar && !urlName && !urlAvatarCode) {
     setTimeout(() => {
       settingsOverlay.classList.add('show');
+      const fi = document.createElement('input');
+      fi.type = 'file'; fi.id = 'avatarFileInput'; fi.accept = 'image/*'; fi.style.display = 'none';
+      uploadArea.appendChild(fi);
+      fi.addEventListener('change', (e) => { if (e.target.files[0]) handleFile(e.target.files[0]); });
+      uploadArea.onclick = () => fi.click();
       setTimeout(() => nameInput.focus(), 350);
     }, 600);
   }
